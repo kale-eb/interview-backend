@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  analysis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: analysis
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  rating:
+    build:
+      context: .
+      dockerfile: Dockerfile.rate-interview
+    container_name: rating
+    ports:
+      - "8001:8001"
+    restart: unless-stopped 
