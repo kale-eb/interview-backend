@@ -349,6 +349,8 @@ class BehaviorLogger:
             'details': details
         })
     
+
+    
     def get_session_summary(self):
         """Get current session statistics"""
         duration = time.time() - self.session_start_time
@@ -371,11 +373,12 @@ class BehaviorLogger:
     
     def save_session_log(self):
         """Save complete session log to file"""
+        # Update session_stats with final values
         self.session_stats['end_time'] = datetime.now().isoformat()
         self.session_stats['total_duration'] = time.time() - self.session_start_time
         self.session_stats['total_face_touches'] = self.face_touch_count
         
-        # Save detailed log
+        # Save detailed log - session_stats should be the root object for rating API compatibility
         log_file = os.path.join(self.logs_dir, f"session_{self.session_id}.json")
         with open(log_file, 'w') as f:
             json.dump({

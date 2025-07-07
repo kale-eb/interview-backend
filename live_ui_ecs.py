@@ -326,6 +326,16 @@ class ECSInterviewUI:
                     }
                 }
                 self.session_events.append(event_data)
+                
+                # Also add to session_stats for rating API compatibility
+                stats_data = {
+                    "start_time_relative": relative_time,
+                    "end_time_relative": relative_time + 0.1,
+                    "duration": 0.1,
+                    "severity": "medium",
+                    "score_start": eye_contact_score
+                }
+                self.session_stats["eye_contact_breaks"].append(stats_data)
         
         # Face touching analysis
         if "hand_gestures" in analysis_result:
@@ -340,6 +350,17 @@ class ECSInterviewUI:
                     }
                 }
                 self.session_events.append(event_data)
+                
+                # Also add to session_stats for rating API compatibility
+                stats_data = {
+                    "start_time_relative": relative_time,
+                    "end_time_relative": relative_time + 0.1,
+                    "duration": 0.1,
+                    "severity": "high" if face_touching_score > 0.7 else "medium",
+                    "max_score": face_touching_score,
+                    "total_count": len([e for e in self.session_events if e["event_type"] == "face_touch"]) + 1
+                }
+                self.session_stats["face_touch_incidents"].append(stats_data)
         
         # Posture analysis
         if "posture" in analysis_result:
@@ -354,6 +375,15 @@ class ECSInterviewUI:
                     }
                 }
                 self.session_events.append(event_data)
+                
+                # Also add to session_stats for rating API compatibility
+                stats_data = {
+                    "start_time_relative": relative_time,
+                    "end_time_relative": relative_time + 0.1,
+                    "duration": 0.1,
+                    "severity": "medium"
+                }
+                self.session_stats["bad_posture_periods"].append(stats_data)
     
     def save_session_log(self):
         """Save session log to file"""
@@ -362,15 +392,21 @@ class ECSInterviewUI:
         
         duration = time.time() - self.session_start_time
         
-        session_data = {
+        # Update session_stats with final values for rating API compatibility
+        self.session_stats.update({
             "session_id": self.session_id,
             "start_time": datetime.fromtimestamp(self.session_start_time).isoformat(),
+            "session_start_timestamp": self.session_start_time,
             "end_time": datetime.now().isoformat(),
-            "duration": duration,
-            "total_frames": self.frame_count,
-            "total_analysis": self.analysis_count,
-            "events": self.session_events,
-            "session_stats": self.session_stats
+            "total_duration": duration,
+            "total_face_touches": len([e for e in self.session_events if e["event_type"] == "face_touch"]),
+            "avg_eye_contact_score": 0,  # Could be calculated from analysis results
+            "avg_posture_score": 0       # Could be calculated from analysis results
+        })
+        
+        session_data = {
+            "session_stats": self.session_stats,
+            "events": self.session_events
         }
         
         # Save to file
