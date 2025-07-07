@@ -10,6 +10,8 @@ from PIL import Image
 import math
 from typing import Dict, List, Optional, Tuple
 import logging
+import os
+import sys
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -450,6 +452,25 @@ async def root():
             "/docs": "GET - API documentation"
         }
     }
+
+def kill_process_on_port(port):
+    try:
+        import psutil
+    except ImportError:
+        print("psutil not installed. Please add it to requirements.txt.")
+        return
+    for proc in psutil.process_iter(['pid', 'name', 'connections']):
+        for conn in proc.info.get('connections', []):
+            if conn.status == psutil.CONN_LISTEN and conn.laddr.port == port:
+                print(f"Killing process {proc.info['pid']} ({proc.info['name']}) on port {port}")
+                try:
+                    proc.kill()
+                except Exception as e:
+                    print(f"Could not kill process {proc.info['pid']}: {e}")
+
+# Kill processes on ports 8000 and 8001 before starting the app
+kill_process_on_port(8000)
+kill_process_on_port(8001)
 
 if __name__ == "__main__":
     import uvicorn
