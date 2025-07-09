@@ -7,20 +7,19 @@ Analyzes entire video files and returns session logs with ratings
 import cv2
 import numpy as np
 import mediapipe as mp
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import base64
-import io
-from PIL import Image
-import math
-from typing import Dict, List, Optional, Tuple
-import logging
+import tempfile
 import os
-import sys
-import json
 import time
+import json
 from datetime import datetime
+from typing import Dict, List
+import logging
+import io
+import requests
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -39,8 +38,6 @@ app.add_middleware(
 
 # Initialize MediaPipe
 mp_holistic = mp.solutions.holistic
-mp_drawing = mp.solutions.drawing_utils
-mp_face_mesh = mp.solutions.face_mesh
 
 class VideoAnalysisRequest(BaseModel):
     session_id: str
@@ -51,8 +48,8 @@ class VideoAnalysisRequest(BaseModel):
 class VideoAnalysisResponse(BaseModel):
     session_id: str
     user_id: str
-    session_log: Dict
-    final_rating: Dict
+    session_log: Dict  # Full session log for logging
+    final_rating: Dict  # Clean rating format like terminal output
     processing_time: float
     total_frames: int
 
@@ -128,254 +125,171 @@ class EyeContactAnalyzer:
             left_eye_corner_right = face_landmarks.landmark[133] # Right corner of left eye
             left_eye_top = face_landmarks.landmark[159]          # Top of left eye
             left_eye_bottom = face_landmarks.landmark[145]       # Bottom of left eye
-            # Additional landmarks for better vertical detection
-            left_eye_top_inner = face_landmarks.landmark[158]    # Inner top
-            left_eye_bottom_inner = face_landmarks.landmark[153] # Inner bottom
-            # Try to get iris landmarks (available with refine_face_landmarks=True)
-            # Left iris: landmarks 468-472, Right iris: landmarks 473-477
-            left_iris_landmarks = [468, 469, 470, 471, 472] if len(face_landmarks.landmark) > 472 else []
-            right_iris_landmarks = [473, 474, 475, 476, 477] if len(face_landmarks.landmark) > 477 else []
             
             # Right eye corners and key points  
             right_eye_corner_left = face_landmarks.landmark[362]  # Left corner of right eye
             right_eye_corner_right = face_landmarks.landmark[263] # Right corner of right eye
             right_eye_top = face_landmarks.landmark[386]          # Top of right eye
             right_eye_bottom = face_landmarks.landmark[374]       # Bottom of right eye
-            # Additional landmarks for better vertical detection
-            right_eye_top_inner = face_landmarks.landmark[385]    # Inner top
-            right_eye_bottom_inner = face_landmarks.landmark[380] # Inner bottom
             
-            # Calculate eye dimensions and centers (using multiple landmarks for better accuracy)
+            # Calculate eye dimensions and centers
             left_eye_width = abs(left_eye_corner_right.x - left_eye_corner_left.x)
-            # Use both outer and inner vertical landmarks for better height estimation
-            left_eye_height = max(
-                abs(left_eye_top.y - left_eye_bottom.y),
-                abs(left_eye_top_inner.y - left_eye_bottom_inner.y)
-            ) * 1.5  # Scale up to account for visible eye opening vs. actual eye socket
-            left_eye_geometric_center_x = (left_eye_corner_left.x + left_eye_corner_right.x) / 2
-            left_eye_geometric_center_y = (left_eye_top.y + left_eye_bottom.y + left_eye_top_inner.y + left_eye_bottom_inner.y) / 4
+            left_eye_height = abs(left_eye_top.y - left_eye_bottom.y) * 1.5
+            left_eye_center_x = (left_eye_corner_left.x + left_eye_corner_right.x) / 2
+            left_eye_center_y = (left_eye_top.y + left_eye_bottom.y) / 2
             
             right_eye_width = abs(right_eye_corner_right.x - right_eye_corner_left.x)
-            # Use both outer and inner vertical landmarks for better height estimation
-            right_eye_height = max(
-                abs(right_eye_top.y - right_eye_bottom.y),
-                abs(right_eye_top_inner.y - right_eye_bottom_inner.y)
-            ) * 1.5  # Scale up to account for visible eye opening vs. actual eye socket
-            right_eye_geometric_center_x = (right_eye_corner_left.x + right_eye_corner_right.x) / 2
-            right_eye_geometric_center_y = (right_eye_top.y + right_eye_bottom.y + right_eye_top_inner.y + right_eye_bottom_inner.y) / 4
+            right_eye_height = abs(right_eye_top.y - right_eye_bottom.y) * 1.5
+            right_eye_center_x = (right_eye_corner_left.x + right_eye_corner_right.x) / 2
+            right_eye_center_y = (right_eye_top.y + right_eye_bottom.y) / 2
             
-            # Try to use iris landmarks if available, otherwise use geometric center
-            if left_iris_landmarks and right_iris_landmarks:
-                # Calculate iris centers from available iris landmarks
-                left_iris_x = np.mean([face_landmarks.landmark[i].x for i in left_iris_landmarks])
-                left_iris_y = np.mean([face_landmarks.landmark[i].y for i in left_iris_landmarks])
-                right_iris_x = np.mean([face_landmarks.landmark[i].x for i in right_iris_landmarks])
-                right_iris_y = np.mean([face_landmarks.landmark[i].y for i in right_iris_landmarks])
-                iris_available = True
-            else:
-                # Fallback to geometric centers if iris landmarks not available
-                left_iris_x = left_eye_geometric_center_x
-                left_iris_y = left_eye_geometric_center_y
-                right_iris_x = right_eye_geometric_center_x
-                right_iris_y = right_eye_geometric_center_y
-                iris_available = False
-            
-            # Calculate iris position relative to eye boundaries (gaze direction)
-            # For good eye contact, iris should be centered in the eye
-            left_iris_offset_x = (left_iris_x - left_eye_geometric_center_x) / (left_eye_width / 2) if left_eye_width > 0 else 0
-            left_iris_offset_y = (left_iris_y - left_eye_geometric_center_y) / (left_eye_height / 2) if left_eye_height > 0 else 0
-            
-            right_iris_offset_x = (right_iris_x - right_eye_geometric_center_x) / (right_eye_width / 2) if right_eye_width > 0 else 0
-            right_iris_offset_y = (right_iris_y - right_eye_geometric_center_y) / (right_eye_height / 2) if right_eye_height > 0 else 0
-            
-            # Average gaze deviation from center
-            avg_gaze_offset_x = (abs(left_iris_offset_x) + abs(right_iris_offset_x)) / 2
-            avg_gaze_offset_y = (abs(left_iris_offset_y) + abs(right_iris_offset_y)) / 2
-            
-            # Head pose estimation using facial landmarks
-            nose_tip = face_landmarks.landmark[1]
-            nose_bridge = face_landmarks.landmark[6]
-            chin = face_landmarks.landmark[18]
-            
-            # Calculate head orientation
-            face_center_x = (left_eye_geometric_center_x + right_eye_geometric_center_x) / 2
-            face_center_y = (left_eye_geometric_center_y + right_eye_geometric_center_y) / 2
+            # Calculate face center and head positioning
+            face_center_x = (left_eye_center_x + right_eye_center_x) / 2
+            face_center_y = (left_eye_center_y + right_eye_center_y) / 2
             
             # Head centering in frame (should be around 0.5 for good positioning)
-            head_centering = 1 - abs(face_center_x - 0.5) * 2  # Penalize being off-center
+            head_centering_deviation = abs(face_center_x - 0.5)
             
-            # Calculate eye contact score based on gaze direction and head orientation
-            # Lower gaze deviation = better eye contact
-            gaze_score = max(0, 1 - (avg_gaze_offset_x + avg_gaze_offset_y) / 2)
+            # Head tilt detection (eyes should be level)
+            eye_level_difference = abs(left_eye_center_y - right_eye_center_y)
             
-            # Combined eye contact score (gaze + head orientation)
-            eye_contact_score = (gaze_score * 0.7 + head_centering * 0.3)
+            # Calculate eye contact score
+            head_position_score = max(0, 1 - (head_centering_deviation * 3.5))
+            head_tilt_score = max(0, 1 - (eye_level_difference * 15))
             
-            # Confidence based on iris availability and overall face detection quality
-            confidence = eye_contact_score * (1.0 if iris_available else 0.8)
+            # Combined eye contact score
+            eye_contact_score = (head_position_score * 0.7 + head_tilt_score * 0.3)
+            
+            # Calculate confidence based on eye detection quality
+            eye_detection_quality = min(left_eye_width, right_eye_width) * min(left_eye_height, right_eye_height)
+            confidence = min(1.0, eye_detection_quality * 1000)
             
             return {
-                "eye_contact_score": round(eye_contact_score, 3),
-                "gaze_deviation": round((avg_gaze_offset_x + avg_gaze_offset_y) / 2, 3),
-                "head_centering": round(head_centering, 3),
-                "confidence": round(confidence, 3)
+                "eye_contact_score": round(max(0, min(1, eye_contact_score)), 3),
+                "gaze_deviation": round(head_centering_deviation, 3),
+                "confidence": round(max(0, min(1, confidence)), 3),
+                "head_centering": round(head_position_score, 3)
             }
             
         except Exception as e:
-            logger.error(f"Eye contact analysis error: {str(e)}")
-            return {"eye_contact_score": 0.0, "gaze_deviation": 1.0, "confidence": 0.0}
+            logger.warning(f"Eye tracking failed, using basic method: {e}")
+            
+            # Simple fallback method
+            left_eye_x = (face_landmarks.landmark[33].x + face_landmarks.landmark[133].x) / 2
+            right_eye_x = (face_landmarks.landmark[362].x + face_landmarks.landmark[263].x) / 2
+            eye_center_x = (left_eye_x + right_eye_x) / 2
+            
+            # Basic centering score
+            center_deviation = abs(eye_center_x - 0.5)
+            basic_score = max(0, 1 - center_deviation * 3.5)
+            
+            return {
+                "eye_contact_score": round(basic_score, 3),
+                "gaze_deviation": round(center_deviation, 3),
+                "confidence": 0.5,
+                "head_centering": round(basic_score, 3)
+            }
 
 class HandGestureAnalyzer:
     @staticmethod
     def analyze_hand_gestures(left_hand_landmarks, right_hand_landmarks, face_landmarks) -> Dict[str, float]:
-        """Analyze hand gestures and detect face touching"""
-        if not face_landmarks:
-            return {"face_touching": 0.0, "nervous_gestures": 0.0, "confidence": 0.0}
+        """Analyze hand gestures and detect nervous behaviors"""
+        result = {
+            "face_touching": 0.0,
+            "nervous_gestures": 0.0,
+            "appropriate_gestures": 0.0,
+            "confidence": 0.0
+        }
         
-        try:
-            # Get face landmarks for face touching detection
-            nose_tip = face_landmarks.landmark[1]
-            chin = face_landmarks.landmark[18]
-            left_ear = face_landmarks.landmark[234]
-            right_ear = face_landmarks.landmark[454]
-            
-            # Define face region boundaries
-            face_left = min(left_ear.x, nose_tip.x) - 0.05
-            face_right = max(right_ear.x, nose_tip.x) + 0.05
-            face_top = min(nose_tip.y, chin.y) - 0.1
-            face_bottom = max(nose_tip.y, chin.y) + 0.1
-            
-            face_touching_score = 0.0
-            nervous_gestures_score = 0.0
-            total_hands = 0
-            
-            # Analyze left hand
-            if left_hand_landmarks:
-                total_hands += 1
-                hand_points = []
-                for landmark in left_hand_landmarks.landmark:
-                    hand_points.append((landmark.x, landmark.y))
+        if not face_landmarks:
+            return result
+        
+        # Get face boundaries
+        face_points = [(lm.x, lm.y) for lm in face_landmarks.landmark]
+        face_x_min = min(p[0] for p in face_points)
+        face_x_max = max(p[0] for p in face_points)
+        face_y_min = min(p[1] for p in face_points)
+        face_y_max = max(p[1] for p in face_points)
+        
+        # Expand face region by 30% to catch approaching hands
+        face_width = face_x_max - face_x_min
+        face_height = face_y_max - face_y_min
+        expansion_x = face_width * 0.3
+        expansion_y = face_height * 0.3
+        
+        expanded_x_min = max(0, face_x_min - expansion_x)
+        expanded_x_max = min(1, face_x_max + expansion_x)  
+        expanded_y_min = max(0, face_y_min - expansion_y)
+        expanded_y_max = min(1, face_y_max + expansion_y)
+        
+        hands_detected = 0
+        face_touching_score = 0.0
+        nervous_score = 0.0
+        appropriate_score = 0.0
+        confidence = 0.0  # Initialize confidence
+        
+        for hand_landmarks in [left_hand_landmarks, right_hand_landmarks]:
+            if hand_landmarks:
+                hands_detected += 1
                 
-                # Check if any hand points are near the face
-                face_touch_count = 0
-                for x, y in hand_points:
-                    if (face_left <= x <= face_right and face_top <= y <= face_bottom):
-                        face_touch_count += 1
+                # Get hand landmarks
+                hand_points = [(lm.x, lm.y) for lm in hand_landmarks.landmark]
                 
-                if face_touch_count > 0:
-                    face_touching_score += face_touch_count / len(hand_points)
+                # Check for face touching
+                for point in hand_points:
+                    # Direct face contact
+                    if (face_x_min <= point[0] <= face_x_max and 
+                        face_y_min <= point[1] <= face_y_max):
+                        face_touching_score += 0.5
+                    # Approaching face
+                    elif (expanded_x_min <= point[0] <= expanded_x_max and 
+                          expanded_y_min <= point[1] <= expanded_y_max):
+                        face_touching_score += 0.2
                 
-                # Detect nervous gestures (rapid movements, fidgeting)
-                # This is a simplified version - in practice you'd track movement over time
-                hand_center_x = np.mean([p[0] for p in hand_points])
-                hand_center_y = np.mean([p[1] for p in hand_points])
+                # Analyze hand position for nervous gestures
+                wrist = hand_landmarks.landmark[0]
                 
-                # Simple heuristic: hands near face or rapid movement patterns
-                if face_touching_score > 0.1:
-                    nervous_gestures_score += 0.5
-            
-            # Analyze right hand
-            if right_hand_landmarks:
-                total_hands += 1
-                hand_points = []
-                for landmark in right_hand_landmarks.landmark:
-                    hand_points.append((landmark.x, landmark.y))
+                # Check if hands are in "nervous" positions
+                if wrist.y < 0.6 and abs(wrist.x - 0.5) < 0.3:
+                    nervous_score += 0.3
                 
-                # Check if any hand points are near the face
-                face_touch_count = 0
-                for x, y in hand_points:
-                    if (face_left <= x <= face_right and face_top <= y <= face_bottom):
-                        face_touch_count += 1
-                
-                if face_touch_count > 0:
-                    face_touching_score += face_touch_count / len(hand_points)
-                
-                # Detect nervous gestures
-                hand_center_x = np.mean([p[0] for p in hand_points])
-                hand_center_y = np.mean([p[1] for p in hand_points])
-                
-                if face_touching_score > 0.1:
-                    nervous_gestures_score += 0.5
-            
-            # Normalize scores
-            if total_hands > 0:
-                face_touching_score /= total_hands
-                nervous_gestures_score /= total_hands
-            
-            # Confidence based on hand detection
-            confidence = 1.0 if total_hands > 0 else 0.5
-            
-            return {
-                "face_touching": round(face_touching_score, 3),
-                "nervous_gestures": round(nervous_gestures_score, 3),
-                "confidence": round(confidence, 3)
-            }
-            
-        except Exception as e:
-            logger.error(f"Hand gesture analysis error: {str(e)}")
-            return {"face_touching": 0.0, "nervous_gestures": 0.0, "confidence": 0.0}
-
-def process_frame(image: np.ndarray) -> AnalysisResult:
-    """Process a single frame and return analysis results"""
-    # Convert BGR to RGB for MediaPipe
-    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    
-    # Process with MediaPipe Holistic
-    results = holistic.process(rgb_image)
-    
-    # Get image dimensions
-    height, width = image.shape[:2]
-    
-    # Analyze posture
-    posture_analysis = PostureAnalyzer.analyze_posture(results.pose_landmarks, width, height)
-    
-    # Analyze eye contact
-    eye_contact_analysis = EyeContactAnalyzer.analyze_eye_contact(results.face_landmarks)
-    
-    # Analyze hand gestures
-    hand_gesture_analysis = HandGestureAnalyzer.analyze_hand_gestures(
-        results.left_hand_landmarks, 
-        results.right_hand_landmarks, 
-        results.face_landmarks
-    )
-    
-    # Calculate overall score
-    overall_score = (
-        posture_analysis["confidence"] * 0.4 +
-        eye_contact_analysis["confidence"] * 0.35 +
-        hand_gesture_analysis["confidence"] * 0.25
-    )
-    
-    # Generate recommendations
-    recommendations = []
-    if posture_analysis["confidence"] < 0.7:
-        recommendations.append("Try to sit up straighter and center yourself in the frame")
-    if eye_contact_analysis["eye_contact_score"] < 0.6:
-        recommendations.append("Maintain more eye contact with the camera")
-    if hand_gesture_analysis["face_touching"] > 0.3:
-        recommendations.append("Avoid touching your face during the interview")
-    if hand_gesture_analysis["nervous_gestures"] > 0.5:
-        recommendations.append("Try to keep your hands in a more natural, relaxed position")
-    
-    return AnalysisResult(
-        posture=posture_analysis,
-        eye_contact=eye_contact_analysis,
-        hand_gestures=hand_gesture_analysis,
-        overall_score=round(overall_score, 3),
-        recommendations=recommendations
-    )
+                # Check for appropriate gesture range
+                if 0.3 <= wrist.y <= 0.8 and 0.2 <= wrist.x <= 0.8:
+                    appropriate_score += 0.5
+        
+        # Normalize scores
+        if hands_detected > 0:
+            confidence = min(1.0, hands_detected / 2.0)
+            face_touching_score = min(1.0, face_touching_score)
+            nervous_score = min(1.0, nervous_score)
+            appropriate_score = min(1.0, appropriate_score)
+        
+        result.update({
+            "face_touching": round(face_touching_score, 3),
+            "nervous_gestures": round(nervous_score, 3),
+            "appropriate_gestures": round(appropriate_score, 3),
+            "confidence": round(confidence, 3)
+        })
+        
+        return result
 
 @app.post("/analyze_video", response_model=VideoAnalysisResponse)
 async def analyze_video(request: VideoAnalysisRequest):
-    """Analyze a complete video and return session log and final rating"""
-    start_time = time.time()
-    
+    """Analyze a complete video and return session log with rating"""
+    tmpfile_path = None
     try:
-        # Decode base64 video data
-        video_data = base64.b64decode(request.video_data)
-        video_bytes = io.BytesIO(video_data)
+        start_time = time.time()
+        logger.info(f"Starting video analysis for session {request.session_id}")
         
-        # Initialize MediaPipe Holistic for video processing
+        # Decode base64 video
+        video_data = base64.b64decode(request.video_data)
+        
+        # Save to temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=f".{request.video_format}") as tmp:
+            tmp.write(video_data)
+            tmpfile_path = tmp.name
+        
+        # Initialize MediaPipe
         holistic_video = mp_holistic.Holistic(
             static_image_mode=False,
             model_complexity=1,
@@ -387,25 +301,8 @@ async def analyze_video(request: VideoAnalysisRequest):
             min_tracking_confidence=0.5
         )
         
-        # Initialize session log
-        session_log = {
-            "session_id": request.session_id,
-            "user_id": request.user_id,
-            "start_time": datetime.now().isoformat(),
-            "total_frames": 0,
-            "frame_rate": 0,
-            "duration_seconds": 0,
-            "posture_data": [],
-            "eye_contact_data": [],
-            "hand_gesture_data": [],
-            "recommendations": [],
-            "events": []
-        }
-        
-        # Process video frame by frame
-        cap = cv2.VideoCapture()
-        cap.open(video_bytes)
-        
+        # Initialize video capture
+        cap = cv2.VideoCapture(tmpfile_path)
         if not cap.isOpened():
             raise HTTPException(status_code=400, detail="Could not open video file")
         
@@ -413,17 +310,46 @@ async def analyze_video(request: VideoAnalysisRequest):
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         duration_seconds = total_frames / frame_rate if frame_rate > 0 else 0
         
-        session_log["total_frames"] = total_frames
-        session_log["frame_rate"] = frame_rate
-        session_log["duration_seconds"] = duration_seconds
+        logger.info(f"Video info: {total_frames} frames, {frame_rate:.2f} fps, {duration_seconds:.2f}s")
         
-        logger.info(f"Processing video: {total_frames} frames, {frame_rate:.2f} fps, {duration_seconds:.2f}s")
+        # Initialize session tracking with duration-based event logging
+        session_start_time = time.time()
+        session_events = []
+        session_stats = {
+            "eye_contact_breaks": [],
+            "face_touch_incidents": [],
+            "bad_posture_periods": [],
+            "flicker_events": []
+        }
+        
+        # Duration tracking for sustained events
+        eye_contact_break_start = None
+        face_touch_start = None
+        bad_posture_start = None
         
         frame_count = 0
+        # Remove frame_data storage - we only need events, not every frame
+        
+        # For calculating averages at the end
+        posture_scores = []
+        eye_contact_scores = []
+        
+        # Process at 10 FPS max for faster analysis
+        analysis_fps = 10
+        frame_skip = max(1, int(frame_rate / analysis_fps)) if frame_rate > 0 else 1
+        logger.info(f"Processing every {frame_skip} frames (target: {analysis_fps} FPS)")
+        
         while True:
             ret, frame = cap.read()
             if not ret:
                 break
+            
+            current_time = frame_count / frame_rate if frame_rate > 0 else 0
+            
+            # Skip frames to achieve target FPS
+            if frame_count % frame_skip != 0:
+                frame_count += 1
+                continue
             
             # Convert BGR to RGB for MediaPipe
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -434,112 +360,264 @@ async def analyze_video(request: VideoAnalysisRequest):
             # Get image dimensions
             height, width = frame.shape[:2]
             
-            # Analyze posture
+            # Analyze components
             posture_analysis = PostureAnalyzer.analyze_posture(results.pose_landmarks, width, height)
-            session_log["posture_data"].append({
-                "frame_number": frame_count,
-                "timestamp": frame_count / frame_rate if frame_rate > 0 else 0,
-                "posture": posture_analysis
-            })
-            
-            # Analyze eye contact
             eye_contact_analysis = EyeContactAnalyzer.analyze_eye_contact(results.face_landmarks)
-            session_log["eye_contact_data"].append({
-                "frame_number": frame_count,
-                "timestamp": frame_count / frame_rate if frame_rate > 0 else 0,
-                "eye_contact": eye_contact_analysis
-            })
-            
-            # Analyze hand gestures
             hand_gesture_analysis = HandGestureAnalyzer.analyze_hand_gestures(
                 results.left_hand_landmarks, 
                 results.right_hand_landmarks, 
                 results.face_landmarks
             )
-            session_log["hand_gesture_data"].append({
-                "frame_number": frame_count,
-                "timestamp": frame_count / frame_rate if frame_rate > 0 else 0,
-                "hand_gestures": hand_gesture_analysis
-            })
             
-            # Log behavioral events
-            if posture_analysis["confidence"] < 0.6:
-                session_log["events"].append({
-                    "frame_number": frame_count,
-                    "timestamp": frame_count / frame_rate if frame_rate > 0 else 0,
-                    "event_type": "poor_posture",
-                    "severity": "medium",
-                    "details": {"confidence": posture_analysis["confidence"]}
-                })
+            # Store scores for calculating averages (not full frame data)
+            posture_scores.append(posture_analysis["confidence"])
+            eye_contact_scores.append(eye_contact_analysis["eye_contact_score"])
             
-            if eye_contact_analysis["eye_contact_score"] < 0.5:
-                session_log["events"].append({
-                    "frame_number": frame_count,
-                    "timestamp": frame_count / frame_rate if frame_rate > 0 else 0,
-                    "event_type": "eye_contact_break",
-                    "severity": "medium",
-                    "details": {"score": eye_contact_analysis["eye_contact_score"]}
-                })
+            # Duration-based event logging (like original live_ui.py)
+            # Only log sustained behaviors that meet minimum duration thresholds
             
-            if hand_gesture_analysis["face_touching"] > 0.3:
-                session_log["events"].append({
-                    "frame_number": frame_count,
-                    "timestamp": frame_count / frame_rate if frame_rate > 0 else 0,
-                    "event_type": "face_touching",
-                    "severity": "high" if hand_gesture_analysis["face_touching"] > 0.7 else "medium",
-                    "details": {"score": hand_gesture_analysis["face_touching"]}
-                })
+            # Eye contact break tracking (1.5+ seconds like original)
+            if eye_contact_analysis["eye_contact_score"] < 0.6:
+                if eye_contact_break_start is None:
+                    eye_contact_break_start = current_time
+            else:
+                if eye_contact_break_start is not None:
+                    duration = current_time - eye_contact_break_start
+                    if duration >= 1.5:  # Only log breaks 1.5+ seconds
+                        start_rel_time = eye_contact_break_start
+                        end_rel_time = current_time
+                        
+                        # Add to session_stats (for rating service compatibility)
+                        stats_data = {
+                            "start_time_relative": start_rel_time,
+                            "end_time_relative": end_rel_time,
+                            "duration": duration,
+                            "severity": "high" if duration > 3 else "medium",
+                            "score_start": eye_contact_analysis["eye_contact_score"]
+                        }
+                        session_stats["eye_contact_breaks"].append(stats_data)
+                        
+                        # Add to events (for logging)
+                        session_events.append({
+                            "timestamp_relative": end_rel_time,
+                            "event_type": "eye_contact_break",
+                            "details": stats_data
+                        })
+                        
+                        logger.info(f"🔴 Eye contact break logged: {duration:.1f}s at {start_rel_time:.1f}s")
+                    eye_contact_break_start = None
+            
+            # Face touching tracking (0.5+ seconds like original)
+            if hand_gesture_analysis["face_touching"] > 0.25:  # Match original threshold
+                if face_touch_start is None:
+                    face_touch_start = current_time
+            else:
+                if face_touch_start is not None:
+                    duration = current_time - face_touch_start
+                    if duration >= 0.5:  # Only log sustained face touching
+                        start_rel_time = face_touch_start
+                        end_rel_time = current_time
+                        
+                        # Add to session_stats (for rating service compatibility)
+                        stats_data = {
+                            "start_time_relative": start_rel_time,
+                            "end_time_relative": end_rel_time,
+                            "duration": duration,
+                            "severity": "high" if duration > 2 else "medium",
+                            "max_score": hand_gesture_analysis["face_touching"],
+                            "total_count": len(session_stats["face_touch_incidents"]) + 1
+                        }
+                        session_stats["face_touch_incidents"].append(stats_data)
+                        
+                        # Add to events (for logging)
+                        session_events.append({
+                            "timestamp_relative": end_rel_time,
+                            "event_type": "face_touch",
+                            "details": stats_data
+                        })
+                        
+                        logger.info(f"🔴 Face touch logged: {duration:.1f}s at {start_rel_time:.1f}s")
+                    face_touch_start = None
+            
+            # Bad posture tracking (3+ seconds like original)
+            if posture_analysis["confidence"] < 0.7:
+                if bad_posture_start is None:
+                    bad_posture_start = current_time
+            else:
+                if bad_posture_start is not None:
+                    duration = current_time - bad_posture_start
+                    if duration >= 3.0:  # Only log sustained bad posture
+                        start_rel_time = bad_posture_start
+                        end_rel_time = current_time
+                        
+                        # Add to session_stats (for rating service compatibility)
+                        stats_data = {
+                            "start_time_relative": start_rel_time,
+                            "end_time_relative": end_rel_time,
+                            "duration": duration,
+                            "severity": "medium"
+                        }
+                        session_stats["bad_posture_periods"].append(stats_data)
+                        
+                        # Add to events (for logging)
+                        session_events.append({
+                            "timestamp_relative": end_rel_time,
+                            "event_type": "bad_posture_start",
+                            "details": stats_data
+                        })
+                        
+                        logger.info(f"🔴 Bad posture logged: {duration:.1f}s at {start_rel_time:.1f}s")
+                    bad_posture_start = None
             
             frame_count += 1
             
-            # Log progress every 100 frames
-            if frame_count % 100 == 0:
-                logger.info(f"Processed {frame_count}/{total_frames} frames")
+            # Log progress (adjusted for frame skipping)
+            if frame_count % (100 * frame_skip) == 0:
+                analyzed_frames = frame_count // frame_skip
+                logger.info(f"Analyzed {analyzed_frames} frames (frame {frame_count}/{total_frames})")
         
-        # Calculate final ratings
-        posture_scores = [p["posture"]["confidence"] for p in session_log["posture_data"]]
-        eye_contact_scores = [e["eye_contact"]["eye_contact_score"] for e in session_log["eye_contact_data"]]
-        hand_gesture_scores = [h["hand_gestures"]["confidence"] for h in session_log["hand_gesture_data"]]
+        # Handle ongoing events at end of video (same format as during video)
+        if eye_contact_break_start is not None:
+            duration = duration_seconds - eye_contact_break_start
+            if duration >= 1.5:
+                start_rel_time = eye_contact_break_start
+                end_rel_time = duration_seconds
+                
+                # Add to session_stats (for rating service compatibility)
+                stats_data = {
+                    "start_time_relative": start_rel_time,
+                    "end_time_relative": end_rel_time,
+                    "duration": duration,
+                    "severity": "high" if duration > 3 else "medium",
+                    "score_start": 0.0  # Unknown score at end
+                }
+                session_stats["eye_contact_breaks"].append(stats_data)
+                
+                # Add to events (for logging)
+                session_events.append({
+                    "timestamp_relative": end_rel_time,
+                    "event_type": "eye_contact_break",
+                    "details": stats_data
+                })
+                
+                logger.info(f"🔴 Eye contact break logged (end): {duration:.1f}s at {start_rel_time:.1f}s")
         
-        # Calculate averages (excluding zero scores)
-        avg_posture = np.mean([s for s in posture_scores if s > 0]) if any(s > 0 for s in posture_scores) else 0
-        avg_eye_contact = np.mean([s for s in eye_contact_scores if s > 0]) if any(s > 0 for s in eye_contact_scores) else 0
-        avg_hand_gesture = np.mean([s for s in hand_gesture_scores if s > 0]) if any(s > 0 for s in hand_gesture_scores) else 0
+        if face_touch_start is not None:
+            duration = duration_seconds - face_touch_start
+            if duration >= 0.5:
+                start_rel_time = face_touch_start
+                end_rel_time = duration_seconds
+                
+                # Add to session_stats (for rating service compatibility)
+                stats_data = {
+                    "start_time_relative": start_rel_time,
+                    "end_time_relative": end_rel_time,
+                    "duration": duration,
+                    "severity": "high" if duration > 2 else "medium",
+                    "max_score": 0.0,  # Unknown score at end
+                    "total_count": len(session_stats["face_touch_incidents"]) + 1
+                }
+                session_stats["face_touch_incidents"].append(stats_data)
+                
+                # Add to events (for logging)
+                session_events.append({
+                    "timestamp_relative": end_rel_time,
+                    "event_type": "face_touch",
+                    "details": stats_data
+                })
+                
+                logger.info(f"🔴 Face touch logged (end): {duration:.1f}s at {start_rel_time:.1f}s")
         
-        # Calculate overall rating
-        overall_rating = (
-            avg_posture * 0.4 +
-            avg_eye_contact * 0.35 +
-            avg_hand_gesture * 0.25
-        )
-        
-        # Generate final recommendations
-        final_recommendations = []
-        if avg_posture < 0.7:
-            final_recommendations.append("Work on maintaining better posture throughout the interview")
-        if avg_eye_contact < 0.6:
-            final_recommendations.append("Practice maintaining consistent eye contact with the camera")
-        if any(h["hand_gestures"]["face_touching"] > 0.3 for h in session_log["hand_gesture_data"]):
-            final_recommendations.append("Avoid touching your face during interviews")
-        
-        # Create final rating
-        final_rating = {
-            "session_id": request.session_id,
-            "user_id": request.user_id,
-            "overall_rating": round(overall_rating, 3),
-            "posture_rating": round(avg_posture, 3),
-            "eye_contact_rating": round(avg_eye_contact, 3),
-            "hand_gesture_rating": round(avg_hand_gesture, 3),
-            "total_events": len(session_log["events"]),
-            "events_per_minute": round(len(session_log["events"]) / (duration_seconds / 60), 2) if duration_seconds > 0 else 0,
-            "final_recommendations": final_recommendations
-        }
+        if bad_posture_start is not None:
+            duration = duration_seconds - bad_posture_start
+            if duration >= 3.0:
+                start_rel_time = bad_posture_start
+                end_rel_time = duration_seconds
+                
+                # Add to session_stats (for rating service compatibility)
+                stats_data = {
+                    "start_time_relative": start_rel_time,
+                    "end_time_relative": end_rel_time,
+                    "duration": duration,
+                    "severity": "medium"
+                }
+                session_stats["bad_posture_periods"].append(stats_data)
+                
+                # Add to events (for logging)
+                session_events.append({
+                    "timestamp_relative": end_rel_time,
+                    "event_type": "bad_posture_start",
+                    "details": stats_data
+                })
+                
+                logger.info(f"🔴 Bad posture logged (end): {duration:.1f}s at {start_rel_time:.1f}s")
         
         # Close video capture
         cap.release()
         
-        processing_time = time.time() - start_time
+        # Create session log for rating service (compatible with existing format)
+        session_stats.update({
+            "session_id": request.session_id,
+            "start_time": datetime.fromtimestamp(session_start_time).isoformat(),
+            "session_start_timestamp": session_start_time,
+            "end_time": datetime.now().isoformat(),
+            "total_duration": duration_seconds,
+            "total_face_touches": len(session_stats["face_touch_incidents"]),
+            "avg_eye_contact_score": np.mean(eye_contact_scores) if eye_contact_scores else 0,
+            "avg_posture_score": np.mean(posture_scores) if posture_scores else 0
+        })
         
+        session_data = {
+            "session_stats": session_stats,
+            "events": session_events
+        }
+        
+        # Send to rating service using server IP (since we're running in Docker)
+        rating_result = None
+        try:
+            rating_endpoint = "http://161.35.187.225:8001/rate/session"
+            response = requests.post(
+                rating_endpoint,
+                json=session_data,
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                rating_response = response.json()
+                if rating_response.get("success"):
+                    rating_result = rating_response["rating"]
+                    logger.info(f"📊 Session rated successfully: {rating_result.get('final_score', 'N/A')}/100")
+                else:
+                    logger.error(f"Rating service error: {rating_response.get('error', 'Unknown error')}")
+            else:
+                logger.error(f"Rating service returned status {response.status_code}")
+                
+        except requests.exceptions.ConnectionError:
+            logger.warning("⚠️  Rating service not available")
+        except Exception as e:
+            logger.error(f"Error rating session: {str(e)}")
+        
+        # Create session log (same format as original - no frame_data)
+        session_log = {
+            "session_stats": session_stats,
+            "events": session_events
+        }
+        
+        # Create clean final rating (like terminal output)
+        final_rating = rating_result if rating_result else {
+            "final_score": 0.0,
+            "grade": "N/A",
+            "eye_contact_score": 0.0,
+            "eye_contact_grade": "N/A",
+            "face_touch_score": 0.0,
+            "face_touch_grade": "N/A",
+            "posture_score": 0.0,
+            "posture_grade": "N/A",
+            "frequency_penalty": 0.0,
+            "events_per_minute": len(session_events) / (duration_seconds / 60) if duration_seconds > 0 else 0
+        }
+        
+        processing_time = time.time() - start_time
         logger.info(f"Video analysis completed in {processing_time:.2f}s")
         
         return VideoAnalysisResponse(
@@ -554,6 +632,10 @@ async def analyze_video(request: VideoAnalysisRequest):
     except Exception as e:
         logger.error(f"Error analyzing video: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Video processing error: {str(e)}")
+    finally:
+        # Clean up temporary file
+        if tmpfile_path and os.path.exists(tmpfile_path):
+            os.unlink(tmpfile_path)
 
 @app.get("/health")
 async def health_check():

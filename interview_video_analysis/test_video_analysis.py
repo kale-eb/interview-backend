@@ -121,7 +121,7 @@ if __name__ == "__main__":
     # Test basic functionality
     test_video_analysis()
     
-    # Uncomment to test with a real video file
-    # test_with_real_video("path/to/your/video.mp4")
+    # Test with a real video file
+    test_with_real_video("/Users/calebpong/Downloads/interviewtest.mov")
     
     print("\n✅ Test completed!") 

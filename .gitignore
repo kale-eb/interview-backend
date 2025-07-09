@@ -80,6 +80,7 @@ interview_logs/
 interview_recordings/
 logs/
 results/
+interview_video_analysis/test_results/
 
 # Misc
 *.log
