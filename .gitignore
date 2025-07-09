@@ -81,9 +81,6 @@ interview_recordings/
 logs/
 results/
 
-# Docker
-Dockerfile.video-analysis
-
 # Misc
 *.log
 *.tmp 
