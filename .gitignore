@@ -87,3 +87,7 @@ Dockerfile.video-analysis
 # Misc
 *.log
 *.tmp 
+
+# Ignore environment variable files
+.env
+behavioral_interview_training/config.env 

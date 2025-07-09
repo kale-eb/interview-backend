@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  video-analysis:
+    build:
+      context: .
+      dockerfile: Dockerfile.video-analysis
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s 

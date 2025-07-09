@@ -1,0 +1,4 @@
+{
+  "api_endpoint": "http://161.35.187.225:8000",
+  "rating_endpoint": "http://161.35.187.225:8001"
+} 

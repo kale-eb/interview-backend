@@ -1,0 +1,446 @@
+[
+  {
+    "unique_id": "f8a3b84e-d111-492d-8cc4-a97c225764b9",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "f8a3b84e-d111-492d-8cc4-a97c225764b9",
+    "prompt": "Can you share a specific experience where you had to collaborate with a diverse group of individuals who had differing opinions or work styles? How did you navigate those differences to achieve a common goal, and what was the outcome of that collaboration?",
+    "main_response": "Yeah, this actually reminds me of a group project I did for my Human-Centered Design class. Our team had four people, and we were all pretty different in how we approached work. One person was super design-focused\u2014like really passionate about UI/UX details\u2014and another was all about functionality and fast iteration. I was somewhere in the middle, trying to balance both. The main conflict started when we were deciding how polished our prototype needed to be for the final presentation. The design person wanted to spend a bunch of time refining the visuals, but the other person felt like that was a waste and kept pushing to just focus on getting it working. Meetings got kind of tense, and people were talking over each other or tuning out completely.\nI tried to step in more as a moderator, even though I wasn\u2019t officially the team lead. I set up a shared doc where we listed out the requirements and broke them into \u201cmust-haves\u201d and \u201cnice-to-haves,\u201d so we could align on priorities. I also suggested we set timeboxes\u2014like, give the designer a few hours to polish the homepage, and then pivot to finishing the backend logic. That way, everyone felt heard and we stayed on schedule.In the end, we finished a prototype that looked clean and actually worked. The presentation went well, and I think what I learned was that you don\u2019t need everyone to work the same way\u2014you just need to find a structure that respects their strengths while keeping things grounded in the end goal. It also made me realize how helpful it is to put things in writing when there\u2019s disagreement. Having shared notes and task lists helped us stay aligned even when we didn\u2019t agree on everything.",
+    "followup_response": "Yeah, there was a meeting about a week before our final presentation where things got really tense\u2014the designer wanted to redo the onboarding flow because it didn\u2019t feel smooth enough, but the backend teammate was visibly annoyed and said something like, \u201cWhy are we spending time on stuff that doesn\u2019t matter if it doesn\u2019t even work?\u201d and it felt like the whole conversation was about to spiral, so I stepped in and shared my screen with our shared doc and said, \u201cLet\u2019s just break this down\u2014what\u2019s the bare minimum version that we can commit to by tomorrow night?\u201d and once we listed that out, I said, \u201cIf we hit that, then we can use any leftover time to polish,\u201d and they both actually agreed right away, which kind of surprised me but also showed that having a neutral process to focus on helped shift the energy, and from that I realized that a lot of conflict isn\u2019t about people being difficult\u2014it\u2019s about not having a shared framework for moving forward, so now when I sense that\ntension I try to immediately ground it in priorities and timelines everyone can see.",
+    "category": "Teamwork",
+    "category_scores": {
+      "Teamwork": 7,
+      "Leadership": 6,
+      "Conflict": 8,
+      "Problem Solving": 8,
+      "Initiative": 7,
+      "Adaptability": 6,
+      "Failure": 1,
+      "Communication": 7,
+      "Time Management": 7,
+      "Integrity": 1
+    },
+    "story_hash": "8ede18a3-c32a-5ae1-a659-efa9858ec79c",
+    "summary": "In a Human-Centered Design group project, I mediated conflicts between team members with differing priorities on design and functionality by creating a shared document to outline project requirements and implementing timeboxes for tasks. This approach facilitated collaboration, allowing us to deliver a polished and functional prototype for our final presentation, while also teaching me the importance of structure and written communication in resolving disagreements."
+  },
+  {
+    "unique_id": "127afbc9-bbf8-4673-895c-6eba37b8c55f",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "127afbc9-bbf8-4673-895c-6eba37b8c55f",
+    "prompt": "Can you describe a time when you set a personal or professional goal that you ultimately did not achieve? What specific steps did you take to try to reach that goal, what obstacles did you encounter, and how did you handle the situation once you realized you weren't going to succeed?",
+    "main_response": "Yeah, I set a goal last summer to finish building this personal finance app I started during the school year\u2014I wanted to launch a beta version by the end of August and maybe even let friends try it, so I created a roadmap in Notion, broke it into weekly milestones, and committed to coding at least an hour a day, but once my internship started I totally underestimated how mentally drained I\u2019d be after work, and on top of that I was also taking an online algorithms course and trying to stay active socially, so I kept pushing the project off thinking I\u2019d catch up later, and by mid-August I realized there was no way I\u2019d finish it on time, which honestly felt like a letdown because I had talked about it a lot and felt like I was falling behind my own expectations\u2014but I ended up reframing it by doing a short reflection doc where I wrote out what went wrong, and I realized the issue wasn\u2019t motivation, it was overcommitting without clear fallback plans, so since then I\u2019ve tried to set softer deadlines\nfor side projects and prioritize based on energy, not just ambition.",
+    "followup_response": "Yeah, so in the reflection doc I made a simple three-part structure: first I listed what I originally planned and why I thought it mattered, then I wrote out all the things that got in the way\u2014like specific dates where I skipped progress, why I skipped, and what I was doing instead\u2014and finally I asked myself what I could\u2019ve changed without burning out, and from that I realized I needed to plan around energy levels not just time blocks, so for my next project\u2014a Discord bot I built for my study group\u2014I set super low-pressure goals like \u201ccode one small feature per weekend,\u201d and I gave myself two full months instead of a few weeks, and that slower pace actually helped me stay consistent and finish it without feeling overwhelmed.",
+    "category": "Failure",
+    "category_scores": {
+      "Teamwork": 1,
+      "Leadership": 2,
+      "Conflict": 3,
+      "Problem Solving": 4,
+      "Initiative": 5,
+      "Adaptability": 6,
+      "Failure": 5,
+      "Communication": 2,
+      "Time Management": 4,
+      "Integrity": 2
+    },
+    "story_hash": "e57f416c-f5c7-5a78-bdef-4156e9bc6e7e",
+    "summary": "Failed to launch personal finance app by August due to overcommitment; learned to set softer deadlines and prioritize energy."
+  },
+  {
+    "unique_id": "2aa17c02-ad45-4e65-8ca8-0581d459f9b5",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "2aa17c02-ad45-4e65-8ca8-0581d459f9b5",
+    "prompt": "Can you describe a time when you were part of a team that faced a significant challenge or setback? What role did you play in addressing the issue, how did you support your teammates during this difficult time, and what did you learn from the experience that you apply in team settings today?",
+    "main_response": "Yeah, one time that stands out was during a group project in my software engineering class where we were building a budgeting web app, and about a week before the deadline one of our teammates told us they had to drop the class for personal reasons, which was a huge blow because they were handling the main dashboard feature and we hadn\u2019t touched it yet, so the rest of us had to suddenly redistribute a big chunk of work under time pressure\u2014my role was backend, but I volunteered to pick up the dashboard since I had some experience with React, and I also helped the others reorganize our Trello board and set daily check-ins just to keep everyone on the same page and not fall apart, and even though we were stressed, I kept reminding the team that if we focused on one task at a time, we could still turn in something solid,\nwhich we did\u2014the final product wasn\u2019t as polished as we\u2019d originally planned but it worked and got good feedback, and I think what I learned from that was how important it is to stay solution-focused when plans fall apart, and that small things like organizing check-ins or keeping people calm can have a huge impact on a team\u2019s ability to recover.",
+    "followup_response": "Yeah, one specific challenge was figuring out how to sync the dashboard\u2019s expense graphs with the backend data in real-time because the original teammate had planned to use a different charting library than what I was familiar with, so I had to learn Chart.js from scratch in like two days while also wiring up the API calls correctly, and at first the graphs weren\u2019t updating properly when users added new entries\u2014it turned out I was missing a state update in React that prevented re-rendering, so after a few hours of debugging I fixed it by lifting the state up and using a custom hook to refetch the data on every form submission, and when I showed the working version in our next team call, people were super relieved and one of my teammates messaged me afterward saying, \u201cHonestly dude, you kept us on track when it felt like we were gonna crash,\u201d which meant a lot, and that whole experience taught me that even if you\u2019re not the most experienced person on the team, just stepping in and keeping things\nmoving can make a big difference.",
+    "category": "Teamwork",
+    "category_scores": {
+      "Teamwork": 8,
+      "Leadership": 7,
+      "Conflict": 6,
+      "Problem Solving": 8,
+      "Initiative": 9,
+      "Adaptability": 8,
+      "Failure": 5,
+      "Communication": 7,
+      "Time Management": 6,
+      "Integrity": 4
+    },
+    "story_hash": "846b571c-2ca4-54e9-9e64-b58f6fe3fe1e",
+    "summary": "Faced with a teammate's departure, I led the team in redistributing tasks, ensuring project completion and positive feedback despite challenges."
+  },
+  {
+    "unique_id": "b331551d-6b4c-4950-96dc-d619fb42d619",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "b331551d-6b4c-4950-96dc-d619fb42d619",
+    "prompt": "Can you share an experience from your life\u2014whether in a team project, a volunteer role, or a personal endeavor\u2014where you took on a leadership position but faced a significant failure? What actions did you take to lead and support your team, what went wrong, and how did you respond to the outcome?",
+    "main_response": "Yeah, so I led a team for a student hackathon where our goal was to build a study tracker app that gamified productivity with a point system, and I took charge of organizing the timeline, assigning roles, and setting up our GitHub repo and task board, but I underestimated how much work the integration between the frontend and backend would take and didn\u2019t leave enough time for testing, so even though each part worked separately, we hit a wall the night before the demo when we realized the app kept crashing on login due to an auth bug I hadn\u2019t accounted for, and we all stayed up trying to fix it but ran out of time and had to present a demo video of disconnected features instead of a live walkthrough, which felt like a huge letdown, but after the event I sent a reflection doc to the team outlining what I learned and took full responsibility, and we did a short debrief where people shared feedback and appreciated that I owned up to the planning gaps\u2014what I took from that was that being a leader doesn\u2019t\nmean getting everything right, it means owning the outcome and making space for the team to learn and move forward even when things flop.",
+    "followup_response": "Yeah, after the hackathon I messaged everyone and asked if they\u2019d be open to a short debrief call\u2014not to dwell on the failure but just to talk about what went well and what we\u2019d do differently next time\u2014so I started the call by taking ownership of the poor time allocation and said something like, \u201cI know the integration issues were on me for not budgeting time properly, and I really appreciate how hard you all worked despite that,\u201d and then I asked each person to share one thing they thought worked well and one thing they\u2019d change if we did another project together, and I kept notes in a shared doc so everyone could see it, and what stuck with me most was that a few teammates said they felt like they didn\u2019t fully understand the overall plan or timeline and wished I\u2019d checked in more often, which helped me realize that even if I feel organized in my head, I need to over-communicate when I\u2019m leading, so now in group projects I make sure to write out detailed timelines and do quick daily syn\ns to avoid that same confusion.",
+    "category": "Failure",
+    "category_scores": {
+      "Teamwork": 5,
+      "Leadership": 8,
+      "Conflict": 0,
+      "Problem Solving": 5,
+      "Initiative": 0,
+      "Adaptability": 0,
+      "Failure": 8,
+      "Communication": 7,
+      "Time Management": 4,
+      "Integrity": 8
+    },
+    "story_hash": "1f4015ae-af2f-57f4-9fc3-26adbe832e73",
+    "summary": "Led a team in a hackathon; faced integration issues, presented a video instead, and learned the importance of accountability."
+  },
+  {
+    "unique_id": "3bda4194-8e5d-44c9-8284-e8d8029c4109",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "3bda4194-8e5d-44c9-8284-e8d8029c4109",
+    "prompt": "Can you describe a time when you faced a situation where your personal values were challenged, either in a work, school, or community setting? How did you navigate that situation, and what steps did you take to ensure that your actions aligned with your principles, even if it was difficult or unpopular?",
+    "main_response": "Yeah, this reminds me of my first year in college when I was taking a data structures class and got overwhelmed during a week full of midterms\u2014one of my friends sent me a GitHub repo with a full solution to the assignment we were working on, and I was really tempted to just copy a piece of it because I was stuck on the collision handling part of a hash map and honestly didn\u2019t think I had time to figure it out on my own, but after hovering over the code for a bit I stopped and thought about how I\u2019d feel if someone asked me to explain it in an interview or how I\u2019d feel if I actually got caught, and it just didn\u2019t sit right with me, so I closed the tab, made some tea, and decided to write out everything I didn\u2019t understand and use that to go back through the lecture slides and documentation, and even though I turned it in a bit late and lost a few points, I ended up learning way more and felt way better knowing it was my own work\u2014since then I\u2019ve been a lot more intentional about sticking to my\nvalues, even when the easy option looks tempting in the moment.",
+    "followup_response": "",
+    "category": "Integrity",
+    "category_scores": {
+      "Teamwork": 0,
+      "Leadership": 0,
+      "Conflict": 0,
+      "Problem Solving": 0,
+      "Initiative": 0,
+      "Adaptability": 0,
+      "Failure": 0,
+      "Communication": 0,
+      "Time Management": 0,
+      "Integrity": 10
+    },
+    "story_hash": "4b381da4-e086-5980-8601-e3e1b0d93361",
+    "summary": "Faced with academic pressure, I chose integrity over shortcuts, leading to deeper understanding and commitment to my values."
+  },
+  {
+    "unique_id": "f57edfd1-6d68-4272-ab33-cdefc507eb71",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "f57edfd1-6d68-4272-ab33-cdefc507eb71",
+    "prompt": "Can you share an experience from your life where you witnessed a colleague, teammate, or friend engaging in unethical behavior, and you felt compelled to intervene? What actions did you take, what challenges did you face in doing so, and what was the outcome of that situation?",
+    "main_response": "Yeah, during a group project in one of my CS classes, a teammate admitted in a private message that they\u2019d copied part of their code from an online source without citing it, and they asked me not to say anything because \u201ceveryone does it,\u201d but it didn\u2019t feel right to just ignore it since we were submitting as a team and our names were all on the final report, so I told them directly that I wasn\u2019t comfortable turning it in unless they either rewrote the section or disclosed it properly, and they were kind of annoyed at first and said I was overreacting, but after a day they came back and agreed to redo the function from scratch and asked me to help them understand the logic, so we worked on it together and ended up submitting something that was actually cleaner and more in line with the assignment goals\u2014honestly it was awkward, and I was worried I\u2019d make things worse in the moment, but it made me realize that saying something doesn\u2019t have to be confrontational if you keep the focus on doing\nthe right thing for the group.",
+    "followup_response": "Yeah, when I messaged them I started by keeping the tone really neutral\u2014I said something like, \u201cHey, I saw what you mentioned about copying that code and I totally get that this class is stressful, but since it\u2019s a group submission I just want to be honest that I\u2019m not comfortable turning it in unless it\u2019s original or cited,\u201d and I made sure to avoid accusing them or making it personal, and instead framed it as a team issue that could affect all of us, and I also said I was happy to help walk through the logic with them if they wanted to redo it, which I think helped lower the defensiveness because I wasn\u2019t just pointing fingers\u2014I was offering support too, and that experience really shaped how I see integrity in teams now, like it\u2019s not just about doing your own part right, it\u2019s also about making sure your team is moving in the right direction together, even if it means having uncomfortable conversations.",
+    "category": "Integrity",
+    "category_scores": {
+      "Teamwork": 8,
+      "Leadership": 7,
+      "Conflict": 9,
+      "Problem Solving": 8,
+      "Initiative": 7,
+      "Adaptability": 6,
+      "Failure": 0,
+      "Communication": 8,
+      "Time Management": 0,
+      "Integrity": 10
+    },
+    "story_hash": "20dcd85a-ceab-520f-b8fe-1c7b18a57179",
+    "summary": "Confronted a teammate about plagiarism; they rewrote the code, improving the project and fostering collaboration while upholding integrity."
+  },
+  {
+    "unique_id": "6a744643-fc87-4cc1-8464-a979e59e8196",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "6a744643-fc87-4cc1-8464-a979e59e8196",
+    "prompt": "Can you recount a situation in your life, whether at work, in a class, or during a personal project, where you made a significant decision that turned out to be a mistake? What factors influenced your decision-making process, how did you realize the impact of that mistake, and what steps did you take to rectify the situation?",
+    "main_response": "Yeah, one that comes to mind is when I was leading a team at a student hackathon to build a study tracker app, and I made the decision to spend more time on adding gamification features like a point system and badges early on instead of focusing on the core functionality and backend integration, because I thought it would make our demo stand out more, but that choice backfired when we ran into major bugs during the final integration\u2014specifically the login system kept crashing and we hadn\u2019t left enough time to fix it properly, so we ended up submitting a demo video with disconnected features instead of a working app, which felt like a huge letdown, and I realized that I\u2019d prioritized what looked cool over what was essential, so afterward I organized a short debrief with the team, took responsibility for the planning gaps, and shared a doc with lessons learned, and that mistake taught me to always lock down the core functionality first and use stretch goals as true stretch goals, not priorities.",
+    "followup_response": "",
+    "category": "Failure",
+    "category_scores": {
+      "Teamwork": 0,
+      "Leadership": 6,
+      "Conflict": 0,
+      "Problem Solving": 5,
+      "Initiative": 0,
+      "Adaptability": 0,
+      "Failure": 8,
+      "Communication": 5,
+      "Time Management": 4,
+      "Integrity": 0
+    },
+    "story_hash": "d86e85b7-0ec6-5aa0-87ee-315fbfcce166",
+    "summary": "Led a team at a hackathon, prioritized gamification over core functionality, resulting in a non-working demo; learned to prioritize essentials."
+  },
+  {
+    "unique_id": "e63a8dfe-beee-408a-a44c-88ae83da7d75",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "e63a8dfe-beee-408a-a44c-88ae83da7d75",
+    "prompt": "Can you tell me about a time when a failure you experienced led to a valuable lesson or change in your perspective? What was the situation, how did you come to terms with the failure, and what specific changes did you implement in your approach or mindset as a result?",
+    "main_response": "Yeah, so I led a team for a student hackathon where our goal was to build a study tracker app that gamified productivity with a point system, and I took charge of organizing the timeline, assigning roles, and setting up our GitHub repo and task board, but I underestimated how much work the integration between the frontend and backend would take and didn\u2019t leave enough time for testing, so even though each part worked separately, we hit a wall the night before the demo when we realized the app kept crashing on login due to an auth bug I hadn\u2019t accounted for, and we all stayed up trying to fix it but ran out of time and had to present a demo video of disconnected features instead of a live walkthrough, which felt like a huge letdown, but after the event I sent a reflection doc to the team outlining what I learned and took full responsibility, and we did a short debrief where people shared feedback and appreciated that I owned up to the planning gaps\u2014what I took from that was that being a leader doesn\u2019t\nmean getting everything right, it means owning the outcome and making space for the team to learn and move forward even when things flop.",
+    "followup_response": "",
+    "category": "Failure",
+    "category_scores": {
+      "Teamwork": 8,
+      "Leadership": 10,
+      "Conflict": 0,
+      "Problem Solving": 6,
+      "Initiative": 7,
+      "Adaptability": 5,
+      "Failure": 9,
+      "Communication": 8,
+      "Time Management": 4,
+      "Integrity": 10
+    },
+    "story_hash": "1f4015ae-af2f-57f4-9fc3-26adbe832e73",
+    "summary": "Led a hackathon team to create a study tracker app; faced integration issues, presented a video, and took responsibility for outcomes."
+  },
+  {
+    "unique_id": "02c11df7-cb21-408c-b4a5-1886af468962",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "02c11df7-cb21-408c-b4a5-1886af468962",
+    "prompt": "Can you describe a time when you had multiple important commitments or deadlines overlapping, such as work projects, school assignments, or personal obligations? How did you prioritize your tasks, manage your time effectively, and ensure that you met all your responsibilities? Please walk us through your thought process and the strategies you used to stay on track.",
+    "main_response": "Yeah, during midterms last semester I had a CS project due, a stats exam the next day, and a club workshop I had committed to lead all in the same 3-day window, and at first I kind of panicked and thought I\u2019d have to drop something, but I took a step back and made a time-blocked schedule in Google Calendar where I broke everything into small chunks, like \u201cstudy probability for 90 minutes\u201d or \u201cdebug login feature for 2 hours,\u201d and I also built in short breaks so I wouldn\u2019t burn out, then I ranked everything by urgency and weight\u2014so I finished the CS project first because it was due earliest and worth 25% of my grade, then shifted focus to the stats review, and for the club workshop I reached out to a friend and asked if they could co-lead it with me so I could cut prep time in half, and by spreading it all out and not trying to multitask everything at once, I ended up hitting all the deadlines without pulling an all-nighter, and it made me realize that even when things pile up, clarity and\nstructure usually beats panic.",
+    "followup_response": "Yeah, one challenge was that even though I had everything blocked out, some tasks took longer than I expected\u2014like debugging the CS project ended up being more complicated because of a bug with async state updates, so it ate into my stats study time, and I started to feel behind even though I technically had a plan, so what I did was shift some of the less urgent study blocks to later in the evening and cut one of my breaks shorter, and I also decided to skip watching lecture videos at 1.5x speed and just reviewed slides and practice problems instead to save time, and what I learned is that time-blocking works best when you treat it as a flexible framework, not a rigid schedule\u2014like it gave me structure, but I had to adjust it on the fly when things changed, and that helped me stay calm instead of throwing the whole plan out when one part ran long.",
+    "category": "Integrity",
+    "category_scores": {
+      "Teamwork": 0,
+      "Leadership": 0,
+      "Conflict": 0,
+      "Problem Solving": 8,
+      "Initiative": 7,
+      "Adaptability": 5,
+      "Failure": 0,
+      "Communication": 0,
+      "Time Management": 10,
+      "Integrity": 0
+    },
+    "story_hash": "4f35af22-7050-5cb6-b2e7-6a213a991a10",
+    "summary": "Faced with multiple deadlines, I created a schedule, prioritized tasks, and collaborated, successfully meeting all deadlines without stress."
+  },
+  {
+    "unique_id": "8a120870-3cc4-41d8-8c6f-53ff059879c9",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "8a120870-3cc4-41d8-8c6f-53ff059879c9",
+    "prompt": "Micro-prompted story for Conflict",
+    "main_response": "Context: Hmm, the biggest disagreement I\u2019ve had with a friend was probably during a group project where we totally clashed on how much time we should spend making the UI look polished\u2014he thought it was a waste of time and I felt like it was part of the actual user experience, and we got pretty snappy with each other before we figured out a middle ground.\nChallenge: Yeah, it definitely got tense for a bit, but I suggested we split the work into \u201cmust-have\u201d functionality and \u201cnice-to-have\u201d polish, and we agreed to finish all the core features first\u2014then if we had time left, he gave me the green light to go wild on the UI, which ended up working out perfectly because we actually had a solid buffer near the end.\nYeah, I was honestly frustrated at first and kind of wanted to just push back hard, but I realized that would probably just make him dig in more, so I took a second to breathe, then asked him to walk me through why he felt the polish didn\u2019t matter\u2014and once I understood where he was coming from, I framed my side as wanting the project to feel complete for the demo, not just \u201cworking,\u201d which helped shift it from a debate to a problem-solving conversation.\nActions: It actually turned out great\u2014we finished all the core features with time to spare, so I got to add some UI touches like animations and color themes, and during the demo the judges complimented both the functionality and the clean interface, so I think we both saw that the compromise made the project stronger than either of us trying to win the argument.",
+    "category": "Conflict",
+    "category_scores": {
+      "Teamwork": 8,
+      "Leadership": 0,
+      "Conflict": 8,
+      "Problem Solving": 9,
+      "Initiative": 0,
+      "Adaptability": 0,
+      "Failure": 0,
+      "Communication": 8,
+      "Time Management": 7,
+      "Integrity": 0
+    },
+    "summary": "Disagreed on project UI polish; proposed splitting tasks. Compromise led to successful completion and positive feedback during demo.",
+    "conversation": [
+      [
+        "What\u2019s the biggest disagreement you\u2019ve ever had with a friend?",
+        "Hmm, the biggest disagreement I\u2019ve had with a friend was probably during a group project where we totally clashed on how much time we should spend making the UI look polished\u2014he thought it was a waste of time and I felt like it was part of the actual user experience, and we got pretty snappy with each other before we figured out a middle ground."
+      ],
+      [
+        "Ooh, that sounds like a real struggle! It's tough when creative visions clash. So, what did you both end up doing to find that middle ground?",
+        "Yeah, it definitely got tense for a bit, but I suggested we split the work into \u201cmust-have\u201d functionality and \u201cnice-to-have\u201d polish, and we agreed to finish all the core features first\u2014then if we had time left, he gave me the green light to go wild on the UI, which ended up working out perfectly because we actually had a solid buffer near the end."
+      ],
+      [
+        "That's a great way to find common ground! Can you share a bit more about how you felt during that tense moment and what steps you took to keep the conversation productive?",
+        "Yeah, I was honestly frustrated at first and kind of wanted to just push back hard, but I realized that would probably just make him dig in more, so I took a second to breathe, then asked him to walk me through why he felt the polish didn\u2019t matter\u2014and once I understood where he was coming from, I framed my side as wanting the project to feel complete for the demo, not just \u201cworking,\u201d which helped shift it from a debate to a problem-solving conversation."
+      ],
+      [
+        "Ooh, that sounds like a really mature approach! It\u2019s awesome that you were able to turn that frustration into a productive conversation. After you both found that middle ground, how did the project turn out in the end?",
+        "It actually turned out great\u2014we finished all the core features with time to spare, so I got to add some UI touches like animations and color themes, and during the demo the judges complimented both the functionality and the clean interface, so I think we both saw that the compromise made the project stronger than either of us trying to win the argument."
+      ]
+    ]
+  },
+  {
+    "unique_id": "d71079cb-19dc-4920-a8f1-79dba09bedb8",
+    "user_id": "1",
+    "date": "2025-07-08",
+    "prompt_id": "d71079cb-19dc-4920-a8f1-79dba09bedb8",
+    "prompt": "Micro-prompted story for Failure",
+    "main_response": "Context: Oh yeah\u2014my first semester I totally bombed my intro CS midterm, like I got a 40% and sat there staring at the grade like, \u201cCool cool cool\u2026 guess I\u2019m not a CS major anymore,\u201d even though I knew deep down I just hadn\u2019t prepped right.\nChallenge: Yeah, after the initial panic wore off I realized I needed to stop trying to study alone, so I joined a study group, started going to office hours every week, and actually forced myself to ask questions even when I felt dumb\u2014and the next exam I pulled a B+, so it really showed me how much the process matters more than just grinding solo.\nActions: At first it felt kinda awkward because I didn\u2019t want to be the one always asking questions, but once I saw that everyone was confused about different things, it actually made me feel a lot less alone\u2014and explaining stuff to each other helped it all click way faster than just rereading my notes.\nYeah, there was this one session where I admitted I didn\u2019t get how hash maps handled collisions, and I expected everyone to just move on, but instead one of the others grabbed a whiteboard and drew it out step by step, and then someone else jumped in with a real-world example, and I remember thinking, \u201cOh wow, it\u2019s actually okay to not know stuff here\u201d\u2014that was the moment it started to feel like a safe space to learn.\nResults: Wow, that sounds like such a pivotal moment! It\u2019s amazing how sharing that confusion turned into a group breakthrough. After that session, how did your grades or understanding of the material change? Did you notice an improvement in your confidence or skills?\nYeah, after that I felt way more confident\u2014not just in the material but in asking for help in general\u2014and my grades definitely improved; I ended up getting an A- in the class after retaking it, but more importantly I actually understood the concepts instead of just memorizing them, which gave me a solid foundation for future CS courses.",
+    "category": "Failure",
+    "category_scores": {
+      "Teamwork": 10,
+      "Leadership": 0,
+      "Conflict": 0,
+      "Problem Solving": 0,
+      "Initiative": 0,
+      "Adaptability": 0,
+      "Failure": 0,
+      "Communication": 0,
+      "Time Management": 0,
+      "Integrity": 0
+    },
+    "summary": "What a powerful story! You\u2019ve showcased some incredible behavioral traits that truly highlight your strengths as a candidate. Let\u2019s break down a few key strengths you demonstrated and the positive outcomes that resulted from your actions.\n\n1. **Growth Mindset**: Your initial reaction to your midterm score showed a moment of self-doubt, but rather than giving in to that feeling, you took proactive steps to turn the situation around. This demonstrates a strong growth mindset, which is the belief that abilities can be developed through dedication and hard work. By joining a study group and attending office hours, you showed a willingness to learn and adapt. This mindset is highly valued in any role because it indicates resilience and a commitment to continuous improvement.\n\n2. **Collaboration and Teamwork**: By engaging with your study group and sharing your confusion, you not only fostered a supportive learning environment but also encouraged others to participate and share their knowledge. This highlights your excellent communication skills and ability to collaborate effectively with others. You",
+    "conversation": [
+      [
+        "Hey there! Have you ever bombed a test or project and thought, \u201cWell, that didn\u2019t go as planned\u201d?",
+        "Oh yeah\u2014my first semester I totally bombed my intro CS midterm, like I got a 40% and sat there staring at the grade like, \u201cCool cool cool\u2026 guess I\u2019m not a CS major anymore,\u201d even though I knew deep down I just hadn\u2019t prepped right."
+      ],
+      [
+        "Ooh, that sounds rough! It's tough to see a grade like that, especially when you put in the effort. What did you do next after seeing that 40%? Did you change your study habits or reach out for help?",
+        "Yeah, after the initial panic wore off I realized I needed to stop trying to study alone, so I joined a study group, started going to office hours every week, and actually forced myself to ask questions even when I felt dumb\u2014and the next exam I pulled a B+, so it really showed me how much the process matters more than just grinding solo."
+      ],
+      [
+        "That\u2019s awesome! It sounds like you really turned things around and found a way to make studying more effective for you. Did joining the study group change how you felt about the material or your confidence in the class?",
+        "At first it felt kinda awkward because I didn\u2019t want to be the one always asking questions, but once I saw that everyone was confused about different things, it actually made me feel a lot less alone\u2014and explaining stuff to each other helped it all click way faster than just rereading my notes."
+      ],
+      [
+        "That's a great reflection on the power of collaboration! Can you share a specific moment during the study group where you felt that shift from awkwardness to comfort in asking questions?",
+        "Yeah, there was this one session where I admitted I didn\u2019t get how hash maps handled collisions, and I expected everyone to just move on, but instead one of the others grabbed a whiteboard and drew it out step by step, and then someone else jumped in with a real-world example, and I remember thinking, \u201cOh wow, it\u2019s actually okay to not know stuff here\u201d\u2014that was the moment it started to feel like a safe space to learn."
+      ],
+      [
+        "Wow, that sounds like such a pivotal moment! It\u2019s amazing how sharing that confusion turned into a group breakthrough. After that session, how did your grades or understanding of the material change? Did you notice an improvement in your confidence or skills?",
+        "Wow, that sounds like such a pivotal moment! It\u2019s amazing how sharing that confusion turned into a group breakthrough. After that session, how did your grades or understanding of the material change? Did you notice an improvement in your confidence or skills?"
+      ],
+      [
+        "That\u2019s such a great insight! How did that breakthrough in understanding impact your overall approach to studying and engaging with your coursework moving forward?",
+        "Yeah, after that I felt way more confident\u2014not just in the material but in asking for help in general\u2014and my grades definitely improved; I ended up getting an A- in the class after retaking it, but more importantly I actually understood the concepts instead of just memorizing them, which gave me a solid foundation for future CS courses."
+      ]
+    ]
+  },
+  {
+    "unique_id": "f0d16739-303c-4af8-8475-5a4ed95afbe2",
+    "user_id": "2",
+    "date": "2025-07-08",
+    "prompt_id": "f0d16739-303c-4af8-8475-5a4ed95afbe2",
+    "prompt": "Micro-prompted story for Teamwork",
+    "main_response": "Context: \u201chmm okay um \ud83d\ude05 i don\u2019t know if anything i\u2019ve done is like crazy haha but\u2026 there was this one time in bio lab where our TA got sick and didn\u2019t give us the procedure ahead of time, so my group had to like figure out how to run the whole experiment from just the outline in the textbook??\u201d\nChallenge: umm \ud83d\ude05 i think we just kinda\u2026 like looked at what other groups were doing a little? and then we split up the steps and hoped we were doing it right lol. i mostly did the pipetting stuff cuz i\u2019ve done that before, but yeah it was kinda confusing ngl \ufffd\ufffd\ud83d\udc80\nyeahh umm we kinda just figured it out as we went \ud83d\ude05 no one really like\u2026 took charge or anything. we were all kinda quiet at first lol. someone was like \u201ci can do the measurements\u201d and then i was like \u201coh i can pipette\u201d and then the other two just picked whatever was left i guess? it wasn\u2019t super organized haha but it worked out okay \ud83e\uddeb\nActions: lol yeah pretty much \ud83d\ude02 uhh it actually went better than we thought?? like we got the expected results and didn\u2019t mess anything up too bad haha. the TA emailed us later and was like \u201cgood job improvising\u201d so that was kinda nice \ud83d\ude05 i was honestly surprised it worked ngl\nhmm \ud83e\udd14 i guess\u2026 i learned that it\u2019s okay to not have everything figured out at the start? like sometimes you just gotta try stuff and work together and it\u2019ll come together eventually lol. and i think next time i\u2019d maybe try to speak up more? even if i don\u2019t feel super confident. cuz waiting for someone else to lead didn\u2019t really help \ud83d\ude05\nResults: umm yeah actually \ud83d\ude05 i have this group presentation for my ecology class next week and we\u2019re supposed to explain this whole population dynamics model thing?? it\u2019s kinda complicated lol but i think i\u2019m gonna try to like\u2026 help organize who does what this time. even just making the google doc early or something lol baby steps \ud83d\udc22",
+    "category": "Teamwork",
+    "category_scores": {
+      "Teamwork": 5,
+      "Leadership": 2,
+      "Conflict": 0,
+      "Problem Solving": 6,
+      "Initiative": 4,
+      "Adaptability": 5,
+      "Failure": 0,
+      "Communication": 0,
+      "Time Management": 0,
+      "Integrity": 0
+    },
+    "summary": "What a fantastic story! You\u2019ve demonstrated several strong behavioral traits that highlight why you would be a valuable addition to any team. Let\u2019s break down the key strengths you showcased and the positive outcomes they led to:\n\n1. **Adaptability and Problem-Solving**: When faced with the unexpected challenge of your TA being unavailable and having to rely solely on the textbook outline, you and your group didn\u2019t panic. Instead, you adapted to the situation by observing what other groups were doing and dividing the tasks based on your individual strengths. This flexibility in thinking and willingness to solve problems creatively is a significant strength. It shows that you can remain calm under pressure and find effective solutions, which is a highly sought-after trait in any candidate.\n\n2. **Collaboration and Teamwork**: You mentioned how you and your group members divided the tasks based on what each person felt comfortable doing. This ability to work collaboratively and support one another is crucial in any workplace environment. By communicating your strengths and encouraging others",
+    "conversation": [
+      [
+        "What\u2019s the craziest team project you\u2019ve ever worked on?",
+        "\u201chmm okay um \ud83d\ude05 i don\u2019t know if anything i\u2019ve done is like crazy haha but\u2026 there was this one time in bio lab where our TA got sick and didn\u2019t give us the procedure ahead of time, so my group had to like figure out how to run the whole experiment from just the outline in the textbook??\u201d"
+      ],
+      [
+        "Ooh, that sounds intense! \ud83d\ude05 How did you guys manage to figure it all out without the procedure?",
+        "umm \ud83d\ude05 i think we just kinda\u2026 like looked at what other groups were doing a little? and then we split up the steps and hoped we were doing it right lol. i mostly did the pipetting stuff cuz i\u2019ve done that before, but yeah it was kinda confusing ngl \ufffd\ufffd\ud83d\udc80"
+      ],
+      [
+        "That sounds like a challenging situation! Can you tell me more about how your group decided who would take on which steps of the experiment? Did anyone step up to lead the effort, or did you all just kind of figure it out as you went along?",
+        "yeahh umm we kinda just figured it out as we went \ud83d\ude05 no one really like\u2026 took charge or anything. we were all kinda quiet at first lol. someone was like \u201ci can do the measurements\u201d and then i was like \u201coh i can pipette\u201d and then the other two just picked whatever was left i guess? it wasn\u2019t super organized haha but it worked out okay \ud83e\uddeb"
+      ],
+      [
+        "Haha, sounds like a classic case of teamwork in action! \ud83d\ude02 So, what ended up happening with the experiment? Did it go well or were there any unexpected results?",
+        "lol yeah pretty much \ud83d\ude02 uhh it actually went better than we thought?? like we got the expected results and didn\u2019t mess anything up too bad haha. the TA emailed us later and was like \u201cgood job improvising\u201d so that was kinda nice \ud83d\ude05 i was honestly surprised it worked ngl"
+      ],
+      [
+        "That's awesome that you all managed to get the expected results! Can you tell me more about what you learned from that experience, or how it changed your approach to teamwork in future projects?",
+        "hmm \ud83e\udd14 i guess\u2026 i learned that it\u2019s okay to not have everything figured out at the start? like sometimes you just gotta try stuff and work together and it\u2019ll come together eventually lol. and i think next time i\u2019d maybe try to speak up more? even if i don\u2019t feel super confident. cuz waiting for someone else to lead didn\u2019t really help \ud83d\ude05"
+      ],
+      [
+        "That's such a valuable lesson! \ud83c\udf31 It\u2019s great to hear that you\u2019re thinking about how to be more proactive in the future. Do you have any upcoming projects where you\u2019re planning to take that approach?",
+        "umm yeah actually \ud83d\ude05 i have this group presentation for my ecology class next week and we\u2019re supposed to explain this whole population dynamics model thing?? it\u2019s kinda complicated lol but i think i\u2019m gonna try to like\u2026 help organize who does what this time. even just making the google doc early or something lol baby steps \ud83d\udc22"
+      ]
+    ]
+  },
+  {
+    "unique_id": "4fac179a-bd19-46e8-91b7-d435088fe13a",
+    "user_id": "2",
+    "date": "2025-07-08",
+    "prompt_id": "4fac179a-bd19-46e8-91b7-d435088fe13a",
+    "prompt": "Micro-prompted story for Teamwork",
+    "main_response": "Context: lol okay uhh \ud83d\ude05 probably during my chem lab last semester\u2014me and my partner were trying to do a titration and we accidentally made this like\u2026 super bright pink solution?? like wayyy past the endpoint \ud83d\udc80 and we both just looked at each other and started laughing cuz it was SO off. the TA walked by and was like \u201cwell that\u2019s definitely not colorless\u201d \ud83d\ude2d\nChallenge: haha yeah we were just like \ud83d\ude33 \u201coops\u201d lol. we dumped it and started over \ud83d\ude05 and we were way more careful the second time. like counting every drop out loud lmao. it actually turned out fine after that but we were lowkey so nervous the whole time \ud83e\uddea\ud83d\udca6\numm yeah so like\u2026 we made sure to go way slower with the burette? and we were watching the color super closely that time \ud83d\ude05 i held the flask and she did the drops, and we kept checking with each other like \u201cis it pink yet??\u201d lol. and we also had the TA double check before we stopped just to be safe \ud83d\ude48\nActions: hmm i guess like\u2026 double checking stuff with your partner is really helpful?? and also not rushing even if you feel kinda behind \ud83d\ude05 we were trying to go fast the first time and that\u2019s why we messed up lol. so yeah i think just like\u2026 slowing down and actually talking through each step made a big difference \ud83e\uddea\ud83e\udef6\numm yeah there was this part where the color just started to change and i was like \u201cwait i think it\u2019s turning??\u201d and she stopped right away and was like \u201cokay let\u2019s go drop by drop now\u201d \ud83d\ude05 and that helped a lot cuz we weren\u2019t just like doing our own thing, y\u2019know? it felt more like we were actually working together instead of just hoping it turns out right lol\nResults: yeahh we actually got a perfect result that time!! \ud83d\ude2d\u2728 like the TA looked at it and was like \u201ctextbook endpoint\u201d or something like that lol. and we got full points on the lab report too, which was nice \ud83e\udd79 i think she even wrote \u201cgreat teamwork\u201d in the comments so that felt really good tbh \ud83e\udef6",
+    "category": "Teamwork",
+    "category_scores": {
+      "Teamwork": 10,
+      "Leadership": 0,
+      "Conflict": 0,
+      "Problem Solving": 0,
+      "Initiative": 0,
+      "Adaptability": 0,
+      "Failure": 0,
+      "Communication": 10,
+      "Time Management": 0,
+      "Integrity": 0
+    },
+    "summary": "What a fantastic story you shared about your chemistry lab experience! You demonstrated several strong behavioral traits that not only helped you achieve a successful result but also showcased your ability to collaborate effectively with your partner. Here are a few key strengths that stand out in your story:\n\n1. **Problem-Solving**: When you and your partner encountered the bright pink solution, instead of panicking, you both laughed and quickly decided to start over. This shows your ability to stay calm in the face of challenges and to find solutions without letting the mistake discourage you. By recognizing the error and taking corrective action, you turned a potential setback into a learning opportunity.\n\n2. **Effective Communication and Teamwork**: Your approach to communicating with your partner was excellent. By counting drops out loud and consistently checking in with each other (\"Is it pink yet?\"), you ensured that both of you were on the same page. This collaborative effort not only improved your accuracy during the titration but also fostered a supportive environment for",
+    "conversation": [
+      [
+        "What\u2019s the funniest moment you\u2019ve had while working on a team?",
+        "lol okay uhh \ud83d\ude05 probably during my chem lab last semester\u2014me and my partner were trying to do a titration and we accidentally made this like\u2026 super bright pink solution?? like wayyy past the endpoint \ud83d\udc80 and we both just looked at each other and started laughing cuz it was SO off. the TA walked by and was like \u201cwell that\u2019s definitely not colorless\u201d \ud83d\ude2d"
+      ],
+      [
+        "Ooh, that sounds hilarious! \ud83d\ude02 I can totally picture the moment! What did you guys do after that? Did you try to fix it, or just roll with the mistakes?",
+        "haha yeah we were just like \ud83d\ude33 \u201coops\u201d lol. we dumped it and started over \ud83d\ude05 and we were way more careful the second time. like counting every drop out loud lmao. it actually turned out fine after that but we were lowkey so nervous the whole time \ud83e\uddea\ud83d\udca6"
+      ],
+      [
+        "That's a fun story! Can you tell me more about the specific steps you and your partner took to ensure you didn't make the same mistake the second time?",
+        "umm yeah so like\u2026 we made sure to go way slower with the burette? and we were watching the color super closely that time \ud83d\ude05 i held the flask and she did the drops, and we kept checking with each other like \u201cis it pink yet??\u201d lol. and we also had the TA double check before we stopped just to be safe \ud83d\ude48"
+      ],
+      [
+        "Ooh, that sounds like a solid teamwork strategy! \ud83d\ude4c It\u2019s great that you guys communicated so well and brought the TA in for a second opinion. What did you learn from that experience that you think will help you in future labs or projects? \ud83e\udde0\u2728",
+        "hmm i guess like\u2026 double checking stuff with your partner is really helpful?? and also not rushing even if you feel kinda behind \ud83d\ude05 we were trying to go fast the first time and that\u2019s why we messed up lol. so yeah i think just like\u2026 slowing down and actually talking through each step made a big difference \ud83e\uddea\ud83e\udef6"
+      ],
+      [
+        "That's a great insight about teamwork! Can you share an example of a specific moment when you and your partner communicated during the process? How did that help you both feel more confident?",
+        "umm yeah there was this part where the color just started to change and i was like \u201cwait i think it\u2019s turning??\u201d and she stopped right away and was like \u201cokay let\u2019s go drop by drop now\u201d \ud83d\ude05 and that helped a lot cuz we weren\u2019t just like doing our own thing, y\u2019know? it felt more like we were actually working together instead of just hoping it turns out right lol"
+      ],
+      [
+        "Ooh, that sounds like a pivotal moment! It\u2019s awesome how that communication made you both feel like a real team. \ud83d\udc6b\ud83d\udcaa So, after you successfully finished the titration, what were the results like? Did you end up getting a good grade or feedback from the TA?",
+        "yeahh we actually got a perfect result that time!! \ud83d\ude2d\u2728 like the TA looked at it and was like \u201ctextbook endpoint\u201d or something like that lol. and we got full points on the lab report too, which was nice \ud83e\udd79 i think she even wrote \u201cgreat teamwork\u201d in the comments so that felt really good tbh \ud83e\udef6"
+      ]
+    ]
+  },
+  {
+    "unique_id": "123e796d-d18a-486f-af82-d98123b7e1c8",
+    "user_id": "2",
+    "date": "2025-07-09",
+    "prompt_id": "123e796d-d18a-486f-af82-d98123b7e1c8",
+    "prompt": "Micro-prompted story for Leadership",
+    "main_response": "Context: uhh kinda? \ud83d\ude05 i\u2019m not really the \u201cleader\u201d type tbh but there was this one time in bio discussion where no one else was really saying anything and we had to come up with an answer for this case study thing\u2026 so i just like\u2026 started writing stuff on the whiteboard?? it wasn\u2019t a big thing but yeah i guess that was sorta leading \ud83d\ude2c\nChallenge: umm i think just like\u2026 not being sure if what i was writing was even right?? \ud83d\ude05 i didn\u2019t wanna look dumb lol. and everyone was super quiet so it felt kinda awkward at first. i kept second guessing myself but no one else was doing anything so i just kinda went with it \ud83d\ude2c\nhmm i think i was just like \u201cokay someone\u2019s gotta do something\u201d lol \ud83d\ude05 and i kinda remembered parts of what we learned in lecture, so i just started writing what made the most sense to me? i didn\u2019t really have a strategy tbh, i was just trying to not overthink it too much and hope it helped the group get started \ud83e\udd72\nActions: yeah actually it did \ud83d\ude05 after i wrote a few things, one person was like \u201coh yeah i think it also has to do with this other process\u201d and then someone else added on too. so it kinda got the ball rolling i guess?? we ended up finishing the case study with like 5 minutes to spare lol so it worked out \ud83d\udc40\naww yeah umm i felt kinda relieved honestly \ud83d\ude05 like \u201cokay cool i\u2019m not the only one talking now\u201d lol. it made me feel a little more confident too, like maybe what i wrote actually made sense?? it was nice seeing everyone join in after that, it didn\u2019t feel so awkward anymore \ud83e\udd79",
+    "category": "Leadership",
+    "category_scores": {
+      "Teamwork": 0,
+      "Leadership": 5,
+      "Conflict": 0,
+      "Problem Solving": 0,
+      "Initiative": 5,
+      "Adaptability": 0,
+      "Failure": 0,
+      "Communication": 0,
+      "Time Management": 0,
+      "Integrity": 0
+    },
+    "summary": "What a fantastic story! It's clear that you demonstrated some impressive behavioral traits during your bio discussion, and you should feel proud of how you stepped up in a moment of uncertainty. Let's break down a few key strengths you showcased:\n\n1. **Initiative and Leadership**: Even though you don\u2019t see yourself as a \u201cleader,\u201d you took the initiative to start writing on the whiteboard when the group was quiet. This shows that you are willing to step up when needed, which is a critical trait in any collaborative environment. Your actions encouraged your peers to contribute, transforming a stagnant discussion into an engaged one.\n\n2. **Problem-Solving**: You faced a challenge with uncertainty and self-doubt but chose to focus on what you remembered from the lecture rather than letting that overwhelm you. This demonstrates adaptability and quick thinking, which are essential skills in problem-solving. By providing a starting point, you helped your group find a solution to the case study efficiently.\n\n3. **Communication**: Your",
+    "conversation": [
+      [
+        "Hey there! Have you ever had to step up and lead a group project?",
+        "uhh kinda? \ud83d\ude05 i\u2019m not really the \u201cleader\u201d type tbh but there was this one time in bio discussion where no one else was really saying anything and we had to come up with an answer for this case study thing\u2026 so i just like\u2026 started writing stuff on the whiteboard?? it wasn\u2019t a big thing but yeah i guess that was sorta leading \ud83d\ude2c"
+      ],
+      [
+        "Ooh, I totally get that! Sometimes you just have to jump in when the moment calls for it. What did you find challenging about stepping up that time?",
+        "umm i think just like\u2026 not being sure if what i was writing was even right?? \ud83d\ude05 i didn\u2019t wanna look dumb lol. and everyone was super quiet so it felt kinda awkward at first. i kept second guessing myself but no one else was doing anything so i just kinda went with it \ud83d\ude2c"
+      ],
+      [
+        "That's a great start! Can you tell me more about what specific thoughts were running through your mind as you started writing on the whiteboard? Did you have any particular strategies to help you overcome that feeling of uncertainty?",
+        "hmm i think i was just like \u201cokay someone\u2019s gotta do something\u201d lol \ud83d\ude05 and i kinda remembered parts of what we learned in lecture, so i just started writing what made the most sense to me? i didn\u2019t really have a strategy tbh, i was just trying to not overthink it too much and hope it helped the group get started \ud83e\udd72"
+      ],
+      [
+        "Ooh, that's a solid approach! It's impressive that you just went for it without overthinking too much. How did the group react to what you wrote on the whiteboard? Did it spark any discussions or help you guys come to a conclusion?",
+        "yeah actually it did \ud83d\ude05 after i wrote a few things, one person was like \u201coh yeah i think it also has to do with this other process\u201d and then someone else added on too. so it kinda got the ball rolling i guess?? we ended up finishing the case study with like 5 minutes to spare lol so it worked out \ud83d\udc40"
+      ],
+      [
+        "That's a great story! It sounds like your initial actions really helped to break the ice. Can you share more about how you felt when you saw your classmates starting to contribute after you?",
+        "aww yeah umm i felt kinda relieved honestly \ud83d\ude05 like \u201cokay cool i\u2019m not the only one talking now\u201d lol. it made me feel a little more confident too, like maybe what i wrote actually made sense?? it was nice seeing everyone join in after that, it didn\u2019t feel so awkward anymore \ud83e\udd79"
+      ]
+    ]
+  }
+]
