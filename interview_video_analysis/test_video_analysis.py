@@ -77,6 +77,8 @@ def test_with_real_video(video_file_path):
         }
         
         print("Sending video for analysis...")
+        print(f"   Video size: {len(video_data)} bytes")
+        print(f"   Base64 size: {len(video_base64)} characters")
         start_time = time.time()
         
         response = requests.post(

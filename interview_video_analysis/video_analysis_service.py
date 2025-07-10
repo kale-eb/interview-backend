@@ -594,10 +594,12 @@ async def analyze_video(request: VideoAnalysisRequest):
             "events": session_events
         }
         
-        # Send to rating service using localhost (since both services are running in Docker)
+        # Send to rating service
         rating_result = None
         try:
-            rating_endpoint = "http://localhost:8001/rate/session"
+            # Get rating service endpoint from environment variable or use default
+            rating_endpoint = os.getenv("RATING_SERVICE_URL", "http://localhost:8001/rate/session")
+            logger.info(f"Sending session data to rating service: {len(session_data.get('events', []))} events, {len(session_data.get('session_stats', {}).get('eye_contact_breaks', []))} eye contact breaks")
             response = requests.post(
                 rating_endpoint,
                 json=session_data,
@@ -613,6 +615,7 @@ async def analyze_video(request: VideoAnalysisRequest):
                     logger.error(f"Rating service error: {rating_response.get('error', 'Unknown error')}")
             else:
                 logger.error(f"Rating service returned status {response.status_code}")
+                logger.error(f"Rating service response: {response.text}")
                 
         except requests.exceptions.ConnectionError:
             logger.warning("⚠️  Rating service not available")
@@ -626,18 +629,23 @@ async def analyze_video(request: VideoAnalysisRequest):
         }
         
         # Create clean final rating (like terminal output)
-        final_rating = rating_result if rating_result else {
-            "final_score": 0.0,
-            "grade": "N/A",
-            "eye_contact_score": 0.0,
-            "eye_contact_grade": "N/A",
-            "face_touch_score": 0.0,
-            "face_touch_grade": "N/A",
-            "posture_score": 0.0,
-            "posture_grade": "N/A",
-            "frequency_penalty": 0.0,
-            "events_per_minute": len(session_events) / (duration_seconds / 60) if duration_seconds > 0 else 0
-        }
+        if rating_result:
+            final_rating = rating_result
+        else:
+            # Return zero rating when rating service is unavailable
+            logger.warning("Rating service unavailable, returning zero rating")
+            final_rating = {
+                "final_score": 0.0,
+                "grade": "N/A",
+                "eye_contact_score": 0.0,
+                "eye_contact_grade": "N/A",
+                "face_touch_score": 0.0,
+                "face_touch_grade": "N/A",
+                "posture_score": 0.0,
+                "posture_grade": "N/A",
+                "frequency_penalty": 0.0,
+                "events_per_minute": len(session_events) / (duration_seconds / 60) if duration_seconds > 0 else 0
+            }
         
         processing_time = time.time() - start_time
         logger.info(f"Video analysis completed in {processing_time:.2f}s")

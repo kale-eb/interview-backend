@@ -1,0 +1,114 @@
+{
+  "session_log": {
+    "session_stats": {
+      "eye_contact_breaks": [
+        {
+          "start_time_relative": 19.598651994497935,
+          "end_time_relative": 21.498521320495186,
+          "duration": 1.8998693259972512,
+          "severity": "medium",
+          "score_start": 0.75
+        }
+      ],
+      "face_touch_incidents": [
+        {
+          "start_time_relative": 1.899869325997249,
+          "end_time_relative": 2.499828060522696,
+          "duration": 0.5999587345254471,
+          "severity": "medium",
+          "max_score": 0.0,
+          "total_count": 1
+        },
+        {
+          "start_time_relative": 2.899800550206327,
+          "end_time_relative": 3.8997317744154056,
+          "duration": 0.9999312242090785,
+          "severity": "medium",
+          "max_score": 0.0,
+          "total_count": 2
+        },
+        {
+          "start_time_relative": 15.498933975240714,
+          "end_time_relative": 17.898768913342504,
+          "duration": 2.3998349381017903,
+          "severity": "high",
+          "max_score": 0.0,
+          "total_count": 3
+        }
+      ],
+      "bad_posture_periods": [],
+      "flicker_events": [],
+      "session_id": "session_1752106708",
+      "start_time": "2025-07-10T00:18:28.885096",
+      "session_start_timestamp": 1752106708.8850958,
+      "end_time": "2025-07-10T00:19:03.741369",
+      "total_duration": 24.231666666666666,
+      "total_face_touches": 3,
+      "avg_eye_contact_score": 0.8084979423868313,
+      "avg_posture_score": 0.8172222222222224
+    },
+    "events": [
+      {
+        "timestamp_relative": 2.499828060522696,
+        "event_type": "face_touch",
+        "details": {
+          "start_time_relative": 1.899869325997249,
+          "end_time_relative": 2.499828060522696,
+          "duration": 0.5999587345254471,
+          "severity": "medium",
+          "max_score": 0.0,
+          "total_count": 1
+        }
+      },
+      {
+        "timestamp_relative": 3.8997317744154056,
+        "event_type": "face_touch",
+        "details": {
+          "start_time_relative": 2.899800550206327,
+          "end_time_relative": 3.8997317744154056,
+          "duration": 0.9999312242090785,
+          "severity": "medium",
+          "max_score": 0.0,
+          "total_count": 2
+        }
+      },
+      {
+        "timestamp_relative": 17.898768913342504,
+        "event_type": "face_touch",
+        "details": {
+          "start_time_relative": 15.498933975240714,
+          "end_time_relative": 17.898768913342504,
+          "duration": 2.3998349381017903,
+          "severity": "high",
+          "max_score": 0.0,
+          "total_count": 3
+        }
+      },
+      {
+        "timestamp_relative": 21.498521320495186,
+        "event_type": "eye_contact_break",
+        "details": {
+          "start_time_relative": 19.598651994497935,
+          "end_time_relative": 21.498521320495186,
+          "duration": 1.8998693259972512,
+          "severity": "medium",
+          "score_start": 0.75
+        }
+      }
+    ]
+  },
+  "final_rating": {
+    "final_score": 0.0,
+    "grade": "N/A",
+    "eye_contact_score": 0.0,
+    "eye_contact_grade": "N/A",
+    "face_touch_score": 0.0,
+    "face_touch_grade": "N/A",
+    "posture_score": 0.0,
+    "posture_grade": "N/A",
+    "frequency_penalty": 0.0,
+    "events_per_minute": 9.904395075314671
+  },
+  "processing_time": 35.54339241981506,
+  "total_frames": 727
+}
