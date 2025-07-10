@@ -40,14 +40,9 @@ app.add_middleware(
 mp_holistic = mp.solutions.holistic
 
 class VideoAnalysisRequest(BaseModel):
-    session_id: str
-    user_id: str
     video_data: str  # base64 encoded video
-    video_format: str = "mp4"
 
 class VideoAnalysisResponse(BaseModel):
-    session_id: str
-    user_id: str
     session_log: Dict  # Full session log for logging
     final_rating: Dict  # Clean rating format like terminal output
     processing_time: float
@@ -279,15 +274,42 @@ async def analyze_video(request: VideoAnalysisRequest):
     tmpfile_path = None
     try:
         start_time = time.time()
-        logger.info(f"Starting video analysis for session {request.session_id}")
+        # Generate session_id and user_id automatically
+        session_id = f"session_{int(time.time())}"
+        user_id = "auto_user"
+        logger.info(f"Starting video analysis for session {session_id}")
         
         # Decode base64 video
         video_data = base64.b64decode(request.video_data)
         
-        # Save to temporary file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=f".{request.video_format}") as tmp:
-            tmp.write(video_data)
-            tmpfile_path = tmp.name
+        # Auto-detect format by trying common extensions
+        video_formats = ['mp4', 'mov', 'avi', 'mkv', 'webm']
+        tmpfile_path = None
+        
+        for fmt in video_formats:
+            try:
+                with tempfile.NamedTemporaryFile(delete=False, suffix=f".{fmt}") as tmp:
+                    tmp.write(video_data)
+                    tmpfile_path = tmp.name
+                
+                # Test if the file can be opened
+                test_cap = cv2.VideoCapture(tmpfile_path)
+                if test_cap.isOpened():
+                    test_cap.release()
+                    logger.info(f"Auto-detected video format: {fmt}")
+                    break
+                else:
+                    # Clean up failed attempt
+                    os.unlink(tmpfile_path)
+                    tmpfile_path = None
+            except Exception:
+                if tmpfile_path and os.path.exists(tmpfile_path):
+                    os.unlink(tmpfile_path)
+                tmpfile_path = None
+                continue
+        
+        if tmpfile_path is None:
+            raise HTTPException(status_code=400, detail="Could not detect video format or video is invalid")
         
         # Initialize MediaPipe
         holistic_video = mp_holistic.Holistic(
@@ -557,7 +579,7 @@ async def analyze_video(request: VideoAnalysisRequest):
         
         # Create session log for rating service (compatible with existing format)
         session_stats.update({
-            "session_id": request.session_id,
+            "session_id": session_id,
             "start_time": datetime.fromtimestamp(session_start_time).isoformat(),
             "session_start_timestamp": session_start_time,
             "end_time": datetime.now().isoformat(),
@@ -572,10 +594,10 @@ async def analyze_video(request: VideoAnalysisRequest):
             "events": session_events
         }
         
-        # Send to rating service using server IP (since we're running in Docker)
+        # Send to rating service using localhost (since both services are running in Docker)
         rating_result = None
         try:
-            rating_endpoint = "http://161.35.187.225:8001/rate/session"
+            rating_endpoint = "http://localhost:8001/rate/session"
             response = requests.post(
                 rating_endpoint,
                 json=session_data,
@@ -621,8 +643,6 @@ async def analyze_video(request: VideoAnalysisRequest):
         logger.info(f"Video analysis completed in {processing_time:.2f}s")
         
         return VideoAnalysisResponse(
-            session_id=request.session_id,
-            user_id=request.user_id,
             session_log=session_log,
             final_rating=final_rating,
             processing_time=processing_time,

@@ -11,8 +11,8 @@ import time
 def test_video_analysis():
     """Test the video analysis service"""
     
-    # Service URL
-    base_url = "http://localhost:8002"
+    # Service URL (DigitalOcean Docker instance)
+    base_url = "http://161.35.187.225:8002"  # DigitalOcean Docker container
     
     # Test health endpoint
     print("Testing health endpoint...")
@@ -33,10 +33,7 @@ def test_video_analysis():
     # Create a simple test video (you would replace this with actual video data)
     # For now, we'll just test the endpoint structure
     test_data = {
-        "session_id": "test_session_001",
-        "user_id": "test_user_001",
-        "video_data": base64.b64encode(b"test_video_data").decode('utf-8'),
-        "video_format": "mp4"
+        "video_data": base64.b64encode(b"test_video_data").decode('utf-8')
     }
     
     try:
@@ -49,7 +46,7 @@ def test_video_analysis():
         if response.status_code == 200:
             result = response.json()
             print("✅ Video analysis endpoint working")
-            print(f"   Session ID: {result.get('session_id')}")
+            print(f"   Session ID: {result.get('session_log', {}).get('session_stats', {}).get('session_id', 'N/A')}")
             print(f"   Total Frames: {result.get('total_frames')}")
             print(f"   Processing Time: {result.get('processing_time', 0):.2f}s")
         else:
@@ -62,7 +59,7 @@ def test_video_analysis():
 def test_with_real_video(video_file_path):
     """Test with a real video file"""
     
-    base_url = "http://localhost:8002"
+    base_url = "http://161.35.187.225:8002"  # DigitalOcean Docker container
     
     print(f"Testing with real video: {video_file_path}")
     
@@ -76,10 +73,7 @@ def test_with_real_video(video_file_path):
         
         # Prepare request
         test_data = {
-            "session_id": f"real_test_{int(time.time())}",
-            "user_id": "test_user_001",
-            "video_data": video_base64,
-            "video_format": "mp4"
+            "video_data": video_base64
         }
         
         print("Sending video for analysis...")
@@ -95,14 +89,15 @@ def test_with_real_video(video_file_path):
         
         if response.status_code == 200:
             result = response.json()
+            session_id = result.get('session_log', {}).get('session_stats', {}).get('session_id', 'unknown')
             print("✅ Real video analysis successful!")
-            print(f"   Session ID: {result.get('session_id')}")
+            print(f"   Session ID: {session_id}")
             print(f"   Total Frames: {result.get('total_frames')}")
             print(f"   Processing Time: {result.get('processing_time', 0):.2f}s")
-            print(f"   Overall Rating: {result.get('final_rating', {}).get('overall_rating', 0):.3f}")
+            print(f"   Overall Rating: {result.get('final_rating', {}).get('final_score', 0):.3f}")
             
             # Save result to file
-            output_file = f"test_result_{result.get('session_id')}.json"
+            output_file = f"test_result_{session_id}.json"
             with open(output_file, 'w') as f:
                 json.dump(result, f, indent=2)
             print(f"   Results saved to: {output_file}")
@@ -115,7 +110,7 @@ def test_with_real_video(video_file_path):
         print(f"❌ Real video test failed: {str(e)}")
 
 if __name__ == "__main__":
-    print("🎬 Video Analysis Service Test")
+    print("🎬 Video Analysis Service Test (DigitalOcean)")
     print("=" * 40)
     
     # Test basic functionality
