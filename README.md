@@ -1,6 +1,6 @@
-# Interview Video Backend
+# Interview Video Analysis Backend
 
-A modular backend system for interview analysis and related services.
+A specialized backend system for real-time interview video analysis and behavioral scoring.
 
 ## Project Structure
 

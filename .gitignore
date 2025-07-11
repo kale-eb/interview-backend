@@ -88,4 +88,7 @@ interview_video_analysis/test_results/
 
 # Ignore environment variable files
 .env
-behavioral_interview_training/config.env 
+
+# Exclude behavioral interview training (moved to separate repo)
+behavioral_interview_training/
+fastapi-behavioral-interview/ 
